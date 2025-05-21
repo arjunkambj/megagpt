@@ -12,8 +12,7 @@ export default function SidebarToggle() {
     <Button
       isIconOnly
       aria-label="Open sidebar menu"
-      className="flex"
-      variant="light"
+      variant="flat"
       onPress={onOpen}
     >
       <Icon

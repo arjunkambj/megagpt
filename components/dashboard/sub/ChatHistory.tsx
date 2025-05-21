@@ -8,7 +8,7 @@ import {
 } from "@heroui/dropdown";
 import { Icon } from "@iconify/react";
 import { Listbox, ListboxItem, ListboxSection } from "@heroui/listbox";
-import { ScrollShadow } from "@heroui/scroll-shadow";
+import { usePathname, useRouter } from "next/navigation";
 
 function PromptMenu() {
   return (
@@ -26,18 +26,18 @@ function PromptMenu() {
         variant="faded"
       >
         <DropdownItem
-          key="share"
+          key="pin"
           className="text-default-500 data-[hover=true]:text-default-500"
           startContent={
             <Icon
               className="text-default-300"
               height={20}
-              icon="solar:square-share-line-linear"
+              icon="solar:pin-linear"
               width={20}
             />
           }
         >
-          Share
+          Pin
         </DropdownItem>
         <DropdownItem
           key="rename"
@@ -52,20 +52,6 @@ function PromptMenu() {
           }
         >
           Rename
-        </DropdownItem>
-        <DropdownItem
-          key="archive"
-          className="text-default-500 data-[hover=true]:text-default-500"
-          startContent={
-            <Icon
-              className="text-default-300"
-              height={20}
-              icon="solar:folder-open-linear"
-              width={20}
-            />
-          }
-        >
-          Archive
         </DropdownItem>
         <DropdownItem
           key="delete"
@@ -88,87 +74,46 @@ function PromptMenu() {
 }
 
 export default function ChatHistory() {
+  const chats = [
+    { id: "1", title: "Chat 1" },
+    { id: "2", title: "Chat 2" },
+    { id: "3", title: "Chat 3" },
+  ];
+
+  const pathname = usePathname();
+  const router = useRouter();
+  const isChatActive = (chatId: string) => {
+    return pathname === `/chat/${chatId}`;
+  };
+
+  const handleChatClick = (chatId: string) => {
+    router.push(`/chat/${chatId}`);
+  };
+
   return (
-    <ScrollShadow className="-mr-6 h-full max-h-full pr-6">
-      <Listbox aria-label="Recent chats" variant="flat">
-        <ListboxSection
-          classNames={{
-            base: "py-0",
-            heading: "py-0 pl-[10px] text-small text-default-400",
-          }}
-          title="Recent"
-        >
-          <ListboxItem
-            key="financial-planning"
-            className="group h-[44px] px-[12px] py-[10px] text-default-500"
-            endContent={<PromptMenu />}
-          >
-            Financial Planning
-          </ListboxItem>
-          <ListboxItem
-            key="email-template"
-            className="h-[44px] px-[12px] py-[10px] text-default-500"
-            endContent={<PromptMenu />}
-          >
-            Email template
-          </ListboxItem>
-          <ListboxItem
-            key="react-19-example"
-            className="h-[44px] px-[12px] py-[10px] text-default-500"
-            endContent={<PromptMenu />}
-          >
-            React 19 examples
-          </ListboxItem>
-          <ListboxItem
-            key="custom-support-message"
-            className="h-[44px] px-[12px] py-[10px] text-default-500"
-            endContent={<PromptMenu />}
-          >
-            Custom support message
-          </ListboxItem>
-          <ListboxItem
-            key="resignation-letter"
-            className="h-[44px] px-[12px] py-[10px] text-default-500"
-            endContent={<PromptMenu />}
-          >
-            Resignation Letter
-          </ListboxItem>
-          <ListboxItem
-            key="design-test-review"
-            className="h-[44px] px-[12px] py-[10px] text-default-500"
-            endContent={<PromptMenu />}
-          >
-            Design test review
-          </ListboxItem>
-          <ListboxItem
-            key="design-system-modules"
-            className="h-[44px] px-[12px] py-[10px] text-default-500"
-            endContent={<PromptMenu />}
-          >
-            Design systems modules
-          </ListboxItem>
-          <ListboxItem
-            key="how-a-taximeter-works"
-            className="h-[44px] px-[12px] py-[10px] text-default-500"
-            endContent={<PromptMenu />}
-          >
-            How a taximeter works
-          </ListboxItem>
-          <ListboxItem
-            key="show-more"
-            className="h-[44px] px-[12px] py-[10px] text-default-400"
-            endContent={
-              <Icon
-                className="text-default-300"
-                icon="solar:alt-arrow-down-linear"
-                width={20}
-              />
-            }
-          >
-            Show more
-          </ListboxItem>
-        </ListboxSection>
-      </Listbox>
-    </ScrollShadow>
+    <Listbox aria-label="Recent chats" variant="flat">
+      <ListboxSection
+        classNames={{
+          base: "py-0",
+          heading: "py-0 pl-[10px] text-small y text-default-400",
+        }}
+        title="All Chats"
+      >
+        {chats.map((chat) => {
+          return (
+            <ListboxItem
+              key={chat.id}
+              className={`group h-[44px] px-[12px] py-[10px] text-default-500 cursor-pointer ${
+                isChatActive(chat.id) ? "bg-default-100" : ""
+              }`}
+              endContent={<PromptMenu />}
+              onClick={() => handleChatClick(chat.id)}
+            >
+              {chat.title}
+            </ListboxItem>
+          );
+        })}
+      </ListboxSection>
+    </Listbox>
   );
 }

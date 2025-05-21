@@ -10,6 +10,7 @@ import { Logo } from "./Logo";
 import ChatHistory from "./ChatHistory";
 
 import { useSidebarToggle } from "@/atoms/sidebarState";
+import AvatarDropdown from "./AvatarDropdown";
 
 export default function SidebarContent() {
   const { isOpen, onOpenChange, onClose } = useSidebarToggle();
@@ -66,21 +67,6 @@ export default function SidebarContent() {
       {/* Footer Buttons */}
       <div className="mt-auto flex flex-col">
         <Button
-          fullWidth
-          className="justify-start text-default-600"
-          startContent={
-            <Icon
-              className="text-default-600"
-              icon="solar:info-circle-line-duotone"
-              width={24}
-            />
-          }
-          variant="light"
-        >
-          Help
-        </Button>
-
-        <Button
           as={Link}
           className="justify-start text-default-600"
           href="/settings"
@@ -93,8 +79,9 @@ export default function SidebarContent() {
           }
           variant="light"
         >
-          Settings
+          Renew Plus
         </Button>
+        <AvatarDropdown />
       </div>
     </div>
   );
