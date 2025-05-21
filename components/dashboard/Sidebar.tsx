@@ -1,9 +1,13 @@
-import ChatHistory from "./sub/ChatHistory";
+import React from "react";
+
+import SidebarContent from "./sub/sidebar-content";
 
 export default function Sidebar() {
   return (
-    <div className="flex flex-col gap-2 h-full">
-      <ChatHistory />
-    </div>
+    <>
+      <section className=" h-full bg-default-50">
+        <SidebarContent />
+      </section>
+    </>
   );
 }

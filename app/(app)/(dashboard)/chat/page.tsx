@@ -1,3 +1,9 @@
+import SidebarToggle from "@/components/dashboard/SidebarToggle";
+
 export default function ChatPage() {
-  return <div>Chat</div>;
+  return (
+    <div>
+      <SidebarToggle />
+    </div>
+  );
 }
