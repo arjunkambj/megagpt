@@ -82,6 +82,9 @@ export default function Component() {
                 try {
                   await signIn("google", { redirectTo: "/" });
                 } catch (error) {
+                  void error;
+                  setGoogleLoading(false);
+                } finally {
                   setGoogleLoading(false);
                 }
               }}
@@ -98,17 +101,20 @@ export default function Component() {
                   width={24}
                 />
               }
+              variant="bordered"
               onPress={async () => {
                 setGithubLoading(true);
                 try {
                   await signIn("github", { redirectTo: "/" });
                 } catch (error) {
+                  void error;
+                  setGithubLoading(false);
+                } finally {
                   setGithubLoading(false);
                 }
               }}
-              variant="bordered"
             >
-              Continue with Github
+              s Continue with Github
             </Button>
           </div>
 
