@@ -16,7 +16,7 @@ export default function SidebarContent() {
   const { isOpen, onOpenChange, onClose } = useSidebarToggle();
 
   return (
-    <div className="relative flex h-full w-72 flex-1 flex-col p-6">
+    <div className="relative bg-[#111] flex h-full w-72 flex-1 flex-col p-6">
       {/* Logo and Close Button */}
       <div className="flex items-center justify-between px-2">
         <div className="flex items-center gap-2">

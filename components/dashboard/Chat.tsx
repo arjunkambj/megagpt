@@ -2,44 +2,50 @@
 import UserMessage from "./sub/user-message";
 import AssistanceMessage from "./sub/assistance-message";
 import PromptInput from "./PromptInput";
-export default function Chat({ isDashboard }: { isDashboard: boolean }) {
-  const messages = [
-    {
-      id: 1,
-      message: "Hello, how are you?",
-      role: "user",
-    },
-    {
-      id: 2,
-      message: "I'm fine, thank you!",
-      role: "assistant",
-    },
-  ];
+import { useChat } from "@ai-sdk/react";
 
+export default function Chat({ isDashboard }: { isDashboard: boolean }) {
+  const { messages, input, setInput, handleInputChange, handleSubmit } =
+    useChat({
+      api: "/api/chat",
+      body: {},
+    });
   if (isDashboard) {
     return (
-      <section className="flex h-full w-full items-center justify-center bg-red-500">
-        <PromptInput isDashboard={isDashboard} />
+      <section className="flex h-full w-full items-center justify-center md:max-w-2xl">
+        <PromptInput
+          handleInputChange={handleInputChange}
+          handleSubmit={handleSubmit}
+          input={input}
+          isDashboard={isDashboard}
+          setInput={setInput}
+        />
       </section>
     );
   }
 
   return (
-    <section className="flex h-full w-full bg-green-500 md:max-w-2xl flex-col gap-4">
+    <section className="flex h-full w-full md:max-w-2xl flex-col gap-4">
       <div className="flex flex-col md:pt-3 gap-5">
         {messages.map((message) => (
           <div key={message.id}>
             {message.role === "user" ? (
               <div>
-                <UserMessage message={message.message} />
+                <UserMessage message={message.content} />
               </div>
             ) : (
-              <AssistanceMessage message={message.message} />
+              <AssistanceMessage message={message.content} />
             )}
           </div>
         ))}
       </div>
-      <PromptInput isDashboard={isDashboard} />
+      <PromptInput
+        handleInputChange={handleInputChange}
+        handleSubmit={handleSubmit}
+        input={input}
+        isDashboard={isDashboard}
+        setInput={setInput}
+      />
     </section>
   );
 }
