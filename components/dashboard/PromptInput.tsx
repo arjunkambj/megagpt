@@ -94,17 +94,17 @@ export default function InputPrompt({
 
     if (isDashboard) {
       try {
-        await axios.post("/api/chat/new", {
-          id: chatId,
-        });
-        router.push(`/chat/${chatId}`);
+        // await axios.post("/api/chat/new", {
+        //   id: chatId,
+        // });
+        // router.push(`/chat/${chatId}`);
 
         handleSubmit();
 
-        await axios.post("/api/chat/title", {
-          messages: input,
-          chatId: chatId,
-        });
+        // await axios.post("/api/chat/title", {
+        //   messages: input,
+        //   chatId: chatId,
+        // });
 
         setInput("");
       } catch (error) {
@@ -121,7 +121,11 @@ export default function InputPrompt({
   };
 
   return (
-    <div className="flex w-full flex-col shadow-none gap-4">
+    <div
+      className={`flex w-full px-3 flex-col ${
+        isDashboard ? "" : "absolute bottom-0 max-w-2xl"
+      } gap-4`}
+    >
       <PromptInputFullLineComponent
         chatId={chatId || ""}
         handleInputChange={handleInputChange}

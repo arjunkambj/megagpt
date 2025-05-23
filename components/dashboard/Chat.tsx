@@ -8,7 +8,6 @@ export default function Chat({ isDashboard }: { isDashboard: boolean }) {
   const { messages, input, setInput, handleInputChange, handleSubmit } =
     useChat({
       api: "/api/chat",
-      body: {},
     });
   if (isDashboard) {
     return (

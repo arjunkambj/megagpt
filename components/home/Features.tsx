@@ -119,7 +119,7 @@ export default function Features() {
                   className="text-white hover:text-teal-400 transition-colors font-medium"
                   endContent={
                     <Icon
-                      className=" [&>path]:stroke-[2]"
+                      className="[&>path]:stroke-[2]"
                       icon="solar:arrow-right-linear"
                       width={18}
                     />
