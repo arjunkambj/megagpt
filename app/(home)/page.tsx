@@ -1,7 +1,31 @@
-export default function Home() {
+import { redirect } from "next/navigation";
+import { headers } from "next/headers";
+
+import Hero from "@/components/home/Hero";
+import Pricing from "@/components/home/Pricing";
+import FAQ from "@/components/home/FAQ";
+import Footer from "@/components/home/Footer";
+import Features from "@/components/home/Features";
+import NavMain from "@/components/home/Navbar";
+import AosProvider from "@/components/home/AosProvider";
+import VideoSection from "@/components/home/VideoSection";
+import SectionDivider from "@/components/home/SectionDivider";
+
+export default async function Home() {
   return (
-    <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
-      <h1>Hello World</h1>
-    </section>
+    <AosProvider>
+      <main className="relative max-w-screen ">
+        <NavMain />
+        <VideoSection />
+        <Hero />
+        <SectionDivider />
+        <Features />
+        <SectionDivider />
+        <Pricing />
+        <SectionDivider />
+        <FAQ />
+        <Footer />
+      </main>
+    </AosProvider>
   );
 }
