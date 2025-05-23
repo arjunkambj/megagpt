@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-
 import { generateTitleFromUserMessage } from "@/actions/ai-action";
 
 export async function POST(req: Request) {

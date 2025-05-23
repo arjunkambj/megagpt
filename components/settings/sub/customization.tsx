@@ -5,9 +5,9 @@ import { Input } from "@heroui/input";
 import { Button } from "@heroui/button";
 import { Textarea } from "@heroui/input";
 
-export default function Account() {
+export default function Customization() {
   return (
-    <Card className="max-w-md shadow-none w-full">
+    <Card className="shadow-none w-full">
       <CardBody className="gap-6">
         <div>
           <h1 className="block  mb-2">What should MegaGPT call you?</h1>

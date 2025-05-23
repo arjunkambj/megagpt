@@ -8,20 +8,21 @@ import { addToast } from "@heroui/toast";
 
 export default function ContactUs() {
   return (
-    <Card className="max-w-md shadow-none w-full">
+    <Card className="shadow-none flexw-full">
       <CardHeader className="flex gap-1 flex-col">
         <h2 className="text-xl font-bold">Contact Support</h2>
         <p className="text-sm text-default-500">We are here to help</p>
       </CardHeader>
-      <CardBody className="gap-4">
+      <CardBody className="gap-4 flex flex-col items-end">
         <Input label="Subject" placeholder="How can we help?" />
+        <Input label="Email" placeholder="Your email" />
         <Textarea
           label="Message"
-          minRows={4}
+          minRows={15}
           placeholder="Describe your issue..."
         />
         <Button
-          className="mt-2 bg-teal-500"
+          className="mt-2 w-auto bg-teal-500"
           onPress={() => {
             addToast({
               title: "Message sent",

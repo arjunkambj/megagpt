@@ -14,6 +14,7 @@ import type {
   FunctionReference,
 } from "convex/server";
 import type * as auth from "../auth.js";
+import type * as chat_createChat from "../chat/createChat.js";
 import type * as http from "../http.js";
 
 /**
@@ -26,6 +27,7 @@ import type * as http from "../http.js";
  */
 declare const fullApi: ApiFromModules<{
   auth: typeof auth;
+  "chat/createChat": typeof chat_createChat;
   http: typeof http;
 }>;
 export declare const api: FilterApi<

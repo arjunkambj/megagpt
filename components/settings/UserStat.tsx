@@ -6,10 +6,12 @@ import { Tooltip } from "@heroui/tooltip";
 import { Avatar } from "@heroui/avatar";
 import React from "react";
 
-import { getUser } from "@/actions/user-action";
-
 export default function UserStat() {
-  const user = React.use(getUser());
+  const user = {
+    name: "John Doe",
+    email: "john@doe.com",
+    image: "https://i.pravatar.cc/150?img=1",
+  };
 
   return (
     <Card className="max-w-xs w-full h-full bg-black text-white bg-default-50  border-none shadow-none">
@@ -27,7 +29,7 @@ export default function UserStat() {
           </h2>
           <p className="text-sm text-gray-400 mb-3">{user?.email}</p>
           <Chip className="bg-teal-500 border-none" color="secondary">
-            {user?.subscriptionType}
+            Free
           </Chip>
         </div>
       </CardHeader>
