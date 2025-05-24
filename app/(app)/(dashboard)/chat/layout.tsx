@@ -1,5 +1,4 @@
 import DashboardIcon from "@/components/dashboard/DashboardIcon";
-import AvatarDropdown from "@/components/dashboard/sub/AvatarDropdown";
 export default function ChatLayout({
   children,
 }: {

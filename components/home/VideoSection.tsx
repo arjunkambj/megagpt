@@ -1,13 +1,19 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { LazyMotion, domAnimation, m, useAnimation } from "framer-motion";
+import dynamic from "next/dynamic";
 
+// Create a client-only component with no SSR to prevent hydration issues
 const VideoSection = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const animationControls = useAnimation();
 
+  // Only run client-side code after component is mounted
   useEffect(() => {
+    setIsMounted(true);
+
     const handleVideoLoaded = () => {
       setIsLoaded(true);
     };
@@ -32,6 +38,13 @@ const VideoSection = () => {
       animationControls.start("visible");
     }
   }, [isLoaded, animationControls]);
+
+  // Return null during SSR
+  if (!isMounted) {
+    return (
+      <section className="w-full h-screen fixed top-0 left-0 right-0 bottom-0 bg-black z-0 overflow-hidden"></section>
+    );
+  }
 
   return (
     <section
@@ -148,4 +161,9 @@ const VideoSection = () => {
   );
 };
 
-export default React.memo(VideoSection);
+// Create a version with no SSR to avoid hydration issues
+const VideoSectionNoSSR = dynamic(() => Promise.resolve(VideoSection), {
+  ssr: false,
+});
+
+export default VideoSectionNoSSR;

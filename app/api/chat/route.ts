@@ -1,7 +1,6 @@
 import { NextRequest } from "next/server";
 import { openai } from "@ai-sdk/openai";
 import { streamText } from "ai";
-import chalk from "chalk";
 
 export async function POST(request: NextRequest) {
   const { messages } = await request.json();
@@ -16,10 +15,6 @@ export async function POST(request: NextRequest) {
     system: systemPrompt,
     messages: messages,
   });
-
-  for await (const chunk of result.textStream) {
-    process.stdout.write(chalk.green(chunk));
-  }
 
   return result.toDataStreamResponse();
 }

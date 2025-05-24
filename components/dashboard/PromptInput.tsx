@@ -3,7 +3,9 @@
 import { Button } from "@heroui/button";
 import { Icon } from "@iconify/react";
 import { useRouter } from "next/navigation";
-import axios from "axios";
+import { api } from "@/convex/_generated/api";
+import { useMutation } from "convex/react";
+import { v4 as uuidv4 } from "uuid";
 
 import { PromptInputFullLineComponent } from "./sub/prompt-input-full-line";
 
@@ -94,18 +96,11 @@ export default function InputPrompt({
 
     if (isDashboard) {
       try {
-        // await axios.post("/api/chat/new", {
-        //   id: chatId,
-        // });
-        // router.push(`/chat/${chatId}`);
+        const chatId = uuidv4();
+
+        router.push(`/chat/${chatId}`);
 
         handleSubmit();
-
-        // await axios.post("/api/chat/title", {
-        //   messages: input,
-        //   chatId: chatId,
-        // });
-
         setInput("");
       } catch (error) {
         return { success: false, error: error };

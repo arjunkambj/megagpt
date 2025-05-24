@@ -25,11 +25,11 @@ export default function Chat({ isDashboard }: { isDashboard: boolean }) {
 
   return (
     <section className="flex h-full w-full md:max-w-2xl flex-col gap-4">
-      <div className="flex flex-col md:pt-3 gap-5">
+      <div className="flex flex-col md:pt-10 gap-5">
         {messages.map((message) => (
           <div key={message.id}>
             {message.role === "user" ? (
-              <div>
+              <div className="flex justify-end">
                 <UserMessage message={message.content} />
               </div>
             ) : (

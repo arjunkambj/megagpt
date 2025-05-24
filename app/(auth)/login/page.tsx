@@ -80,7 +80,7 @@ export default function Component() {
               onPress={async () => {
                 setGoogleLoading(true);
                 try {
-                  await signIn("google", { redirectTo: "/" });
+                  await signIn("google", { redirectTo: "/chat" });
                 } catch (error) {
                   void error;
                   setGoogleLoading(false);
@@ -105,7 +105,7 @@ export default function Component() {
               onPress={async () => {
                 setGithubLoading(true);
                 try {
-                  await signIn("github", { redirectTo: "/" });
+                  await signIn("github", { redirectTo: "/chat" });
                 } catch (error) {
                   void error;
                   setGithubLoading(false);
