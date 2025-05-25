@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import { Suspense } from "react";
 import { Button } from "@heroui/button";
 import { Spacer } from "@heroui/spacer";
 import { Icon } from "@iconify/react";
@@ -11,6 +11,7 @@ import ChatHistory from "./ChatHistory";
 
 import { useSidebarToggle } from "@/atoms/sidebarState";
 import AvatarDropdown from "./AvatarDropdown";
+import UserSuspense from "@/components/suspense/UserSuspense";
 
 export default function SidebarContent() {
   const { isOpen, onOpenChange, onClose } = useSidebarToggle();
@@ -81,7 +82,9 @@ export default function SidebarContent() {
         >
           Renew Plus
         </Button>
-        <AvatarDropdown />
+        <Suspense fallback={<UserSuspense />}>
+          <AvatarDropdown />
+        </Suspense>
       </div>
     </div>
   );

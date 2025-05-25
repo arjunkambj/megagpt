@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@heroui/button";
 import {
   Dropdown,
@@ -9,10 +11,15 @@ import {
 import { Avatar } from "@heroui/avatar";
 import { useRouter } from "next/navigation";
 import { useAuthActions } from "@convex-dev/auth/react";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 export default function AvatarDropdown() {
   const router = useRouter();
   const { signOut } = useAuthActions();
+
+  const user = useQuery(api.functions.user.currentUser);
+
   return (
     <div className="flex flex-col gap-4">
       <Dropdown placement="bottom-end">
@@ -22,15 +29,12 @@ export default function AvatarDropdown() {
             className="h-[60px] justify-start gap-3 rounded-[14px]  bg-transparent px-3 py-[10px]"
           >
             <div className="flex w-full items-center gap-3">
-              <Avatar
-                size="sm"
-                src="https://nextuipro.nyc3.cdn.digitaloceanspaces.com/components-images/avatars/3a906b3de8eaa53e14582edf5c918b5d.jpg"
-              />
+              <Avatar size="sm" src={user?.image} />
               <div className="flex flex-col text-left">
                 <p className="text-small font-semibold leading-5 text-foreground">
-                  Taylor Smith
+                  {user?.name}
                 </p>
-                <p className="text-tiny text-default-400">taylor@mail.com</p>
+                <p className="text-tiny text-default-400">{user?.email}</p>
               </div>
             </div>
           </Button>
@@ -46,15 +50,12 @@ export default function AvatarDropdown() {
             onPress={() => router.push("/settings")}
           >
             <div className="flex w-full items-center gap-3">
-              <Avatar
-                size="sm"
-                src="https://nextuipro.nyc3.cdn.digitaloceanspaces.com/components-images/avatars/3a906b3de8eaa53e14582edf5c918b5d.jpg"
-              />
+              <Avatar size="sm" src={user?.image} />
               <div className="flex flex-col text-left">
                 <p className="text-small font-normal leading-5 text-foreground">
-                  Taylor Smith
+                  {user?.name}
                 </p>
-                <p className="text-tiny text-default-400">taylor@mail.com</p>
+                <p className="text-tiny text-default-400">{user?.email}</p>
               </div>
             </div>
           </DropdownItem>

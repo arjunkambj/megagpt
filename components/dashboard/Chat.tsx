@@ -3,6 +3,8 @@ import UserMessage from "./sub/user-message";
 import AssistanceMessage from "./sub/assistance-message";
 import PromptInput from "./PromptInput";
 import { useChat } from "@ai-sdk/react";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 export default function Chat({ isDashboard }: { isDashboard: boolean }) {
   const { messages, input, setInput, handleInputChange, handleSubmit } =

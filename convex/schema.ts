@@ -4,6 +4,16 @@ import { v } from "convex/values";
 
 const schema = defineSchema({
   ...authTables,
+
+  userData: defineTable({
+    userId: v.id("users"),
+    isSubscribed: v.optional(v.boolean()),
+    subscriptionEnds: v.optional(v.number()),
+    subscriptionTier: v.optional(
+      v.union(v.literal("free"), v.literal("plus"), v.literal("pro"))
+    ),
+  }),
+
   chats: defineTable({
     userId: v.id("users"),
     chatId: v.string(),

@@ -1,17 +1,16 @@
+"use client";
+
 import { Icon } from "@iconify/react";
 import { Card, CardBody, CardHeader } from "@heroui/card";
 import { Link } from "@heroui/link";
 import { Chip } from "@heroui/chip";
 import { Tooltip } from "@heroui/tooltip";
 import { Avatar } from "@heroui/avatar";
-import React from "react";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 export default function UserStat() {
-  const user = {
-    name: "John Doe",
-    email: "john@doe.com",
-    image: "https://i.pravatar.cc/150?img=1",
-  };
+  const user = useQuery(api.functions.user.currentUser);
 
   return (
     <Card className="max-w-xs w-full h-full bg-black text-white bg-default-50  border-none shadow-none">

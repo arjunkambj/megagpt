@@ -1,5 +1,4 @@
 import Chat from "@/components/dashboard/Chat";
-import SidebarToggle from "@/components/dashboard/sub/sidebar-toggle";
 
 export default function ChatPage() {
   const isDashboard = true;

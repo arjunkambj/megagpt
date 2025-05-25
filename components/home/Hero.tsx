@@ -36,7 +36,7 @@ export default function Component() {
             <Button
               as={Link}
               className="h-10 w-[163px] border border-white/20 bg-white/10 backdrop-blur-md px-[16px] py-[10px] text-small font-medium leading-5 text-white hover:bg-white/20 transition-colors"
-              href="/register"
+              href="/login"
               radius="full"
               variant="bordered"
             >
