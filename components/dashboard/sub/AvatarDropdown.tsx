@@ -13,12 +13,17 @@ import { useRouter } from "next/navigation";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
+import UserSuspense from "@/components/suspense/UserSuspense";
 
 export default function AvatarDropdown() {
   const router = useRouter();
   const { signOut } = useAuthActions();
 
   const user = useQuery(api.functions.user.currentUser);
+
+  if (!user) {
+    return <UserSuspense />;
+  }
 
   return (
     <div className="flex flex-col gap-4">

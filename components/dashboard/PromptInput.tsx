@@ -77,6 +77,7 @@ export default function InputPrompt({
   setInput,
   handleInputChange,
   handleSubmit,
+  user,
 }: {
   chatId?: string;
   isDashboard?: boolean;
@@ -84,6 +85,7 @@ export default function InputPrompt({
   setInput: (input: string) => void;
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleSubmit: () => void;
+  user: any;
 }) {
   const router = useRouter();
 
@@ -95,10 +97,17 @@ export default function InputPrompt({
     if (!input.trim()) return;
 
     if (isDashboard) {
-      try {
-        const chatId = uuidv4();
+      const chatId = uuidv4();
 
+      try {
         router.push(`/chat/${chatId}`);
+
+        if (user) {
+          await useMutation(api.functions.chat.createChat)({
+            userId: user._id,
+            chatId,
+          });
+        }
 
         handleSubmit();
         setInput("");

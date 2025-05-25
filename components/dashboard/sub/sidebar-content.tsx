@@ -82,9 +82,8 @@ export default function SidebarContent() {
         >
           Renew Plus
         </Button>
-        <Suspense fallback={<UserSuspense />}>
-          <AvatarDropdown />
-        </Suspense>
+
+        <AvatarDropdown />
       </div>
     </div>
   );

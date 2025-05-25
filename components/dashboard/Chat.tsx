@@ -11,6 +11,9 @@ export default function Chat({ isDashboard }: { isDashboard: boolean }) {
     useChat({
       api: "/api/chat",
     });
+
+  const user = useQuery(api.functions.user.currentUser);
+
   if (isDashboard) {
     return (
       <section className="flex h-full w-full items-center justify-center md:max-w-2xl">
@@ -20,6 +23,7 @@ export default function Chat({ isDashboard }: { isDashboard: boolean }) {
           input={input}
           isDashboard={isDashboard}
           setInput={setInput}
+          user={user}
         />
       </section>
     );
@@ -46,6 +50,7 @@ export default function Chat({ isDashboard }: { isDashboard: boolean }) {
         input={input}
         isDashboard={isDashboard}
         setInput={setInput}
+        user={user}
       />
     </section>
   );

@@ -9,6 +9,9 @@ import {
 import { Icon } from "@iconify/react";
 import { Listbox, ListboxItem, ListboxSection } from "@heroui/listbox";
 import { usePathname, useRouter } from "next/navigation";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { Id } from "@/convex/_generated/dataModel";
 
 function PromptMenu() {
   return (
@@ -74,14 +77,14 @@ function PromptMenu() {
 }
 
 export default function ChatHistory() {
-  const chats = [
-    { id: "1", title: "Chat 1" },
-    { id: "2", title: "Chat 2" },
-    { id: "3", title: "Chat 3" },
-  ];
+  const user = useQuery(api.functions.user.currentUser);
+  const chats = useQuery(api.functions.chat.getChats, {
+    userId: user?._id as Id<"users">,
+  });
 
-  const pathname = usePathname();
   const router = useRouter();
+  const pathname = usePathname();
+
   const isChatActive = (chatId: string) => {
     return pathname === `/chat/${chatId}`;
   };
@@ -89,6 +92,10 @@ export default function ChatHistory() {
   const handleChatClick = (chatId: string) => {
     router.push(`/chat/${chatId}`);
   };
+
+  if (!chats) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Listbox aria-label="Recent chats" variant="flat">
@@ -102,12 +109,12 @@ export default function ChatHistory() {
         {chats.map((chat) => {
           return (
             <ListboxItem
-              key={chat.id}
+              key={chat.chatId}
               className={`group h-[44px] px-[12px] py-[10px] text-default-500 cursor-pointer ${
-                isChatActive(chat.id) ? "bg-default-100" : ""
+                isChatActive(chat.chatId) ? "bg-default-100" : ""
               }`}
               endContent={<PromptMenu />}
-              onClick={() => handleChatClick(chat.id)}
+              onClick={() => handleChatClick(chat.chatId)}
             >
               {chat.title}
             </ListboxItem>
