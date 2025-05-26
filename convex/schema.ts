@@ -5,14 +5,19 @@ import { v } from "convex/values";
 const schema = defineSchema({
   ...authTables,
 
-  userData: defineTable({
-    userId: v.id("users"),
+  users: defineTable({
+    name: v.optional(v.string()),
+    email: v.optional(v.string()),
+    emailVerificationTime: v.optional(v.number()),
+    image: v.optional(v.string()),
+    isAnonymous: v.optional(v.boolean()),
+    // Add your custom fields here
     isSubscribed: v.optional(v.boolean()),
-    subscriptionEnds: v.optional(v.number()),
     subscriptionTier: v.optional(
-      v.union(v.literal("free"), v.literal("plus"), v.literal("pro"))
+      v.union(v.literal("free"), v.literal("plus"), v.literal("pro")),
     ),
-  }),
+    subscriptionEnds: v.optional(v.number()),
+  }).index("email", ["email"]),
 
   chats: defineTable({
     userId: v.id("users"),

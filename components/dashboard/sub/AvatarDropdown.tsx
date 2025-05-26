@@ -12,6 +12,7 @@ import { Avatar } from "@heroui/avatar";
 import { useRouter } from "next/navigation";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { useQuery } from "convex/react";
+
 import { api } from "@/convex/_generated/api";
 import UserSuspense from "@/components/suspense/UserSuspense";
 

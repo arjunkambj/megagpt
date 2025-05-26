@@ -7,6 +7,7 @@ import { Chip } from "@heroui/chip";
 import { Tooltip } from "@heroui/tooltip";
 import { Avatar } from "@heroui/avatar";
 import { useQuery } from "convex/react";
+
 import { api } from "@/convex/_generated/api";
 
 export default function UserStat() {

@@ -17,8 +17,8 @@ interface PromptInputProps {
   prompt: string;
   setInput: (value: string) => void;
   handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  handleSubmit: () => void;
-  chatId: string;
+  handleSubmit: (e?: React.FormEvent<HTMLFormElement>) => void;
+
   isLoading?: boolean;
 }
 
@@ -81,9 +81,7 @@ export function PromptInputFullLineComponent({
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.key === "Enter" && !e.shiftKey) {
-        e.preventDefault();
-
-        handleSubmit();
+        handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>);
       }
     },
     [handleSubmit]
@@ -202,7 +200,7 @@ export function PromptInputFullLineComponent({
         </Tooltip>
         <Button
           isIconOnly
-          color={!prompt || isLoading ? "default" : "primary"}
+          color={!prompt || isLoading ? "default" : "secondary"}
           isDisabled={!prompt || isLoading}
           radius="full"
           size="sm"

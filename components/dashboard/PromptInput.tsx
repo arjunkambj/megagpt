@@ -2,10 +2,6 @@
 
 import { Button } from "@heroui/button";
 import { Icon } from "@iconify/react";
-import { useRouter } from "next/navigation";
-import { api } from "@/convex/_generated/api";
-import { useMutation } from "convex/react";
-import { v4 as uuidv4 } from "uuid";
 
 import { PromptInputFullLineComponent } from "./sub/prompt-input-full-line";
 
@@ -71,57 +67,22 @@ const PromptSuggestions = ({ onSelect, className }: PromptSuggestionsProps) => {
 };
 
 export default function InputPrompt({
-  chatId,
   isDashboard,
   input,
   setInput,
   handleInputChange,
-  handleSubmit,
-  user,
+  onSubmit,
 }: {
   chatId?: string;
   isDashboard?: boolean;
   input: string;
   setInput: (input: string) => void;
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleSubmit: () => void;
-  user: any;
-}) {
-  const router = useRouter();
 
+  onSubmit: (e?: React.FormEvent<HTMLFormElement>) => void;
+}) {
   const handleSuggestionSelect = (suggestion: PromptSuggestion) => {
     setInput(`${suggestion.label}`);
-  };
-
-  const onSubmit = async () => {
-    if (!input.trim()) return;
-
-    if (isDashboard) {
-      const chatId = uuidv4();
-
-      try {
-        router.push(`/chat/${chatId}`);
-
-        if (user) {
-          await useMutation(api.functions.chat.createChat)({
-            userId: user._id,
-            chatId,
-          });
-        }
-
-        handleSubmit();
-        setInput("");
-      } catch (error) {
-        return { success: false, error: error };
-      }
-    } else {
-      try {
-        handleSubmit();
-        setInput("");
-      } catch (error) {
-        return { success: false, error: error };
-      }
-    }
   };
 
   return (
@@ -131,7 +92,6 @@ export default function InputPrompt({
       } gap-4`}
     >
       <PromptInputFullLineComponent
-        chatId={chatId || ""}
         handleInputChange={handleInputChange}
         handleSubmit={onSubmit}
         prompt={input}

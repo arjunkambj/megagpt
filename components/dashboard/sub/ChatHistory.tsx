@@ -9,11 +9,22 @@ import {
 import { Icon } from "@iconify/react";
 import { Listbox, ListboxItem, ListboxSection } from "@heroui/listbox";
 import { usePathname, useRouter } from "next/navigation";
-import { useQuery } from "convex/react";
+import { useQuery, useMutation } from "convex/react";
+
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 
-function PromptMenu() {
+function PromptMenu({ chatId }: { chatId: string }) {
+  const deleteChat = useMutation(api.functions.chat.deleteChat);
+
+  const handleDelete = async () => {
+    try {
+      await deleteChat({ chatId });
+    } catch (error) {
+      console.error("Error deleting chat:", error);
+    }
+  };
+
   return (
     <Dropdown>
       <DropdownTrigger>
@@ -68,6 +79,7 @@ function PromptMenu() {
               width={20}
             />
           }
+          onPress={handleDelete}
         >
           Delete
         </DropdownItem>
@@ -78,9 +90,10 @@ function PromptMenu() {
 
 export default function ChatHistory() {
   const user = useQuery(api.functions.user.currentUser);
-  const chats = useQuery(api.functions.chat.getChats, {
-    userId: user?._id as Id<"users">,
-  });
+  const chats = useQuery(
+    api.functions.chat.getChatsByUserId,
+    user ? { userId: user._id as Id<"users"> } : "skip",
+  );
 
   const router = useRouter();
   const pathname = usePathname();
@@ -94,7 +107,9 @@ export default function ChatHistory() {
   };
 
   if (!chats) {
-    return <div>Loading...</div>;
+    return (
+      <div className="text-default-500 text-sm px-3">Loading chats...</div>
+    );
   }
 
   return (
@@ -113,10 +128,10 @@ export default function ChatHistory() {
               className={`group h-[44px] px-[12px] py-[10px] text-default-500 cursor-pointer ${
                 isChatActive(chat.chatId) ? "bg-default-100" : ""
               }`}
-              endContent={<PromptMenu />}
+              endContent={<PromptMenu chatId={chat.chatId} />}
               onClick={() => handleChatClick(chat.chatId)}
             >
-              {chat.title}
+              <div className="truncate">{chat.title}</div>
             </ListboxItem>
           );
         })}

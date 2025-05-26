@@ -1,6 +1,3 @@
-import { redirect } from "next/navigation";
-import { headers } from "next/headers";
-
 import Hero from "@/components/home/Hero";
 import Pricing from "@/components/home/Pricing";
 import FAQ from "@/components/home/FAQ";

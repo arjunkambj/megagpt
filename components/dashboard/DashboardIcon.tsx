@@ -1,8 +1,9 @@
 import { Button } from "@heroui/button";
-import SidebarToggle from "./sub/sidebar-toggle";
-import AIModelSelector from "./sub/ai-model-selector";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import Link from "next/link";
+
+import SidebarToggle from "./sub/sidebar-toggle";
+import AIModelSelector from "./sub/ai-model-selector";
 
 export default function DashboardIcon() {
   return (

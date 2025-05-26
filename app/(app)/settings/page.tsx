@@ -1,5 +1,4 @@
 import SettingsContent from "@/components/settings/SettingContent";
-import { api } from "@/convex/_generated/api";
 
 export default async function Settings() {
   return (
