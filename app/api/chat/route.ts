@@ -19,22 +19,22 @@ export async function POST(request: NextRequest) {
 
   const userModel = openai("gpt-4o-mini");
 
-  // Saving the last message from to database
-  if (messages.length > 0) {
-    const lastMessage = messages[messages.length - 1];
+  // // Saving the last message from to database
+  // if (messages.length > 0) {
+  //   const lastMessage = messages[messages.length - 1];
 
-    if (lastMessage.role === "user") {
-      try {
-        await convex.mutation(api.functions.message.createMessage, {
-          chatId,
-          content: lastMessage.content,
-          role: "user",
-        });
-      } catch (error) {
-        console.error("Error saving user message:", error);
-      }
-    }
-  }
+  //   if (lastMessage.role === "user") {
+  //     try {
+  //       await convex.mutation(api.functions.message.createMessage, {
+  //         chatId,
+  //         content: lastMessage.content,
+  //         role: "user",
+  //       });
+  //     } catch (error) {
+  //       console.error("Error saving user message:", error);
+  //     }
+  //   }
+  // }
 
   const result = streamText({
     model: userModel,
