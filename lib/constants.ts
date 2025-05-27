@@ -1,0 +1,29 @@
+// Chat configuration
+export const CHAT_CONFIG = {
+  MAX_TITLE_LENGTH: 50,
+  DEFAULT_CHAT_TITLE: "New Chat",
+  AI_MODEL: "gpt-4o-mini",
+  SYSTEM_PROMPT:
+    "You are a helpful assistant that can answer questions and help with tasks.",
+} as const;
+
+// UI configuration
+export const UI_CONFIG = {
+  MAX_MESSAGE_ROWS: 16,
+  MIN_MESSAGE_ROWS: 2,
+  LOADING_MESSAGES: {
+    CHAT: "Loading chat...",
+    AI_THINKING: "AI is thinking...",
+    CHATS: "Loading chats...",
+  },
+} as const;
+
+// Error messages
+export const ERROR_MESSAGES = {
+  CHAT_ID_REQUIRED: "Chat ID is required",
+  USER_ID_REQUIRED: "User ID is required",
+  EMPTY_MESSAGE: "Message content cannot be empty",
+  EMPTY_TITLE: "Chat title cannot be empty",
+  CHAT_NOT_FOUND: "Chat not found",
+  INTERNAL_ERROR: "Internal server error",
+} as const;

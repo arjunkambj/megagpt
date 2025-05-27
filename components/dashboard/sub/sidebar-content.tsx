@@ -4,6 +4,7 @@ import { Button } from "@heroui/button";
 import { Spacer } from "@heroui/spacer";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import { Logo } from "./Logo";
 import ChatHistory from "./ChatHistory";
@@ -13,6 +14,12 @@ import { useSidebarToggle } from "@/atoms/sidebarState";
 
 export default function SidebarContent() {
   const { isOpen, onOpenChange, onClose } = useSidebarToggle();
+  const router = useRouter();
+
+  const handleNewChat = () => {
+    // Navigate to /chat with a timestamp to force component remount and state reset
+    router.push("/chat?t=" + Date.now());
+  };
 
   return (
     <div className="relative bg-[#111] flex h-full w-72 flex-1 flex-col p-6">
@@ -44,9 +51,7 @@ export default function SidebarContent() {
       {/* New Chat Button */}
       <Button
         fullWidth
-        as={Link}
         className="mb-6 mt-2 h-[44px] justify-start gap-3 bg-default-foreground px-3 py-[10px] text-default-50"
-        href="/chat"
         startContent={
           <Icon
             className="text-default-50"
@@ -54,6 +59,7 @@ export default function SidebarContent() {
             width={24}
           />
         }
+        onPress={handleNewChat}
       >
         New Chat
       </Button>
