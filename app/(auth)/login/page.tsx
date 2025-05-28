@@ -114,7 +114,7 @@ export default function Component() {
                 }
               }}
             >
-              s Continue with Github
+              Continue with Github
             </Button>
           </div>
 

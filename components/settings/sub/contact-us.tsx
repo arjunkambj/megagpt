@@ -22,7 +22,8 @@ export default function ContactUs() {
           placeholder="Describe your issue..."
         />
         <Button
-          className="mt-2 w-auto bg-teal-500"
+          className="mt-2 w-auto"
+          color="primary"
           onPress={() => {
             addToast({
               title: "Message sent",

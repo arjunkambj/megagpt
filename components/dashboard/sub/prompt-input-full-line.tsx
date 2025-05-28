@@ -135,7 +135,7 @@ export function PromptInputFullLineComponent({
 
   return (
     <Form
-      className="flex w-full shadow-none flex-col items-start gap-0 rounded-medium bg-default-100 dark:bg-default-100"
+      className="flex w-full shadow-none flex-col items-start gap-0 rounded-medium dark:bg-[#141414] border border-default-200/50"
       validationBehavior="native"
       onSubmit={handleSubmit}
     >
@@ -200,7 +200,7 @@ export function PromptInputFullLineComponent({
         </Tooltip>
         <Button
           isIconOnly
-          color={!prompt || isLoading ? "default" : "secondary"}
+          color={!prompt || isLoading ? "default" : "primary"}
           isDisabled={!prompt || isLoading}
           radius="full"
           size="sm"

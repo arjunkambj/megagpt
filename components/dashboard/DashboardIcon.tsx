@@ -11,7 +11,7 @@ export default function DashboardIcon() {
       <SidebarToggle />
       <AIModelSelector />
       <Button isIconOnly as={Link} href="/chat" variant="flat">
-        <Icon height={24} icon={"solar:add-circle-linear"} width={24} />
+        <Icon height={24} icon={"hugeicons:plus-sign"} width={22} />
       </Button>
     </div>
   );

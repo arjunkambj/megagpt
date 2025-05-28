@@ -10,7 +10,6 @@ import { Icon } from "@iconify/react";
 import { Listbox, ListboxItem, ListboxSection } from "@heroui/listbox";
 import { usePathname, useRouter } from "next/navigation";
 import { useQuery, useMutation } from "convex/react";
-
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 
@@ -92,7 +91,7 @@ export default function ChatHistory() {
   const user = useQuery(api.functions.user.currentUser);
   const chats = useQuery(
     api.functions.chat.getChatsByUserId,
-    user ? { userId: user._id as Id<"users"> } : "skip",
+    user ? { userId: user._id as Id<"users"> } : "skip"
   );
 
   const router = useRouter();
@@ -125,8 +124,10 @@ export default function ChatHistory() {
           return (
             <ListboxItem
               key={chat.chatId}
-              className={`group h-[44px] px-[12px] py-[10px] text-default-500 cursor-pointer ${
-                isChatActive(chat.chatId) ? "bg-default-100" : ""
+              className={`group px-3 text-default-500  cursor-pointer ${
+                isChatActive(chat.chatId)
+                  ? "bg-default-100 rounded-xl text-default-900"
+                  : ""
               }`}
               endContent={<PromptMenu chatId={chat.chatId} />}
               onClick={() => handleChatClick(chat.chatId)}

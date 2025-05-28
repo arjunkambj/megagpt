@@ -28,7 +28,7 @@ export default function UserStat() {
             {user?.name}
           </h2>
           <p className="text-sm text-gray-400 mb-3">{user?.email}</p>
-          <Chip className="bg-teal-500 border-none" color="secondary">
+          <Chip className=" border-none" color="primary">
             Free
           </Chip>
         </div>
@@ -47,7 +47,7 @@ export default function UserStat() {
             </div>
             <div className="w-full h-1.5 bg-gray-800 rounded-full mb-1 overflow-hidden">
               <div
-                className="h-full bg-teal-500"
+                className="h-full bg-primary"
                 style={{
                   width: `0%`,
                 }}
@@ -71,7 +71,7 @@ export default function UserStat() {
               <span className="text-gray-300">61/500</span>
             </div>
             <div className="w-full h-1.5 bg-gray-800 rounded-full mb-1 overflow-hidden">
-              <div className="h-full bg-teal-500" style={{ width: "61%" }} />
+              <div className="h-full bg-primary" style={{ width: "61%" }} />
             </div>
             <p className="text-xs text-gray-400">439 messages remaining</p>
           </div>
@@ -79,7 +79,7 @@ export default function UserStat() {
 
         <Link
           isDisabled
-          className="flex items-center justify-center w-full text-sm font-medium text-teal-500 mb-4"
+          className="flex items-center justify-center w-full text-sm font-medium text-primary mb-4"
         >
           Buy more premium credits
           <Icon className="ml-1" icon="mdi:chevron-right" width={16} />

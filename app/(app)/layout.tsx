@@ -7,7 +7,9 @@ export default async function AppLayout({
 }) {
   return (
     <Provider>
-      <section className="flex h-dvh w-dvw">{children}</section>
+      <section className="flex max-h-dvh  overflow-hidden h-dvh w-dvw max-w-dvw">
+        {children}
+      </section>
     </Provider>
   );
 }

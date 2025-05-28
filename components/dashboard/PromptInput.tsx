@@ -87,7 +87,7 @@ export default function InputPrompt({
 
   return (
     <div
-      className={`flex w-full px-3 flex-col ${
+      className={`flex w-full  px-3  flex-col  ${
         isDashboard ? "" : "absolute bottom-0 max-w-2xl"
       } gap-4`}
     >

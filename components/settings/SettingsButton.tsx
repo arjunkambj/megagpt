@@ -9,7 +9,7 @@ export default function SettingsButton() {
     <div className="flex justify-between gap-4 w-full max-w-7xl px-5 py-6">
       <Button
         as={Link}
-        className="bg-transparent hover:text-teal-500 font-medium transform transition-all duration-300  hover:-translate-x-1"
+        className="bg-transparent hover:text-primary font-medium transform transition-all duration-300  hover:-translate-x-1"
         href="/chat"
         startContent={<Icon icon="mdi:arrow-left" width={18} />}
       >

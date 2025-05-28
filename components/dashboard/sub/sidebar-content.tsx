@@ -11,6 +11,7 @@ import ChatHistory from "./ChatHistory";
 import AvatarDropdown from "./AvatarDropdown";
 
 import { useSidebarToggle } from "@/atoms/sidebarState";
+import { ScrollShadow } from "@heroui/scroll-shadow";
 
 export default function SidebarContent() {
   const { isOpen, onOpenChange, onClose } = useSidebarToggle();
@@ -22,7 +23,7 @@ export default function SidebarContent() {
   };
 
   return (
-    <div className="relative bg-[#111] flex h-full w-72 flex-1 flex-col p-6">
+    <div className="relative dark:bg-[#0A0A0A] flex h-full max-w-[270px]  w-[270px] flex-1 flex-col p-6">
       {/* Logo and Close Button */}
       <div className="flex items-center justify-between px-2">
         <div className="flex items-center gap-2">
@@ -51,12 +52,12 @@ export default function SidebarContent() {
       {/* New Chat Button */}
       <Button
         fullWidth
-        className="mb-6 mt-2 h-[44px] justify-start gap-3 bg-default-foreground px-3 py-[10px] text-default-50"
+        className="mb-6 mt-2 rounded-xl justify-start gap-3 bg-default-foreground px-3  py-5 text-default-50"
         startContent={
           <Icon
             className="text-default-50"
-            icon="solar:chat-round-dots-linear"
-            width={24}
+            icon="hugeicons:plus-sign"
+            width={20}
           />
         }
         onPress={handleNewChat}
@@ -65,7 +66,9 @@ export default function SidebarContent() {
       </Button>
 
       {/* Chat History */}
-      <ChatHistory />
+      <ScrollShadow hideScrollBar size={10} visibility="auto">
+        <ChatHistory />
+      </ScrollShadow>
 
       <Spacer y={8} />
 

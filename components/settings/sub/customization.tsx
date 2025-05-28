@@ -30,7 +30,7 @@ export default function Customization() {
         </div>
 
         <div className="flex justify-end mt-4">
-          <Button className="bg-teal-500 text-white px-6 py-2">
+          <Button className="text-white px-6 py-2" color="primary">
             Save Preferences
           </Button>
         </div>
