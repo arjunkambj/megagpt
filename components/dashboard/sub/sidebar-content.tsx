@@ -18,7 +18,7 @@ export default function SidebarContent() {
   const router = useRouter();
 
   const handleNewChat = () => {
-    // Navigate to /chat with a timestamp to force component remount and state reset
+    // Navigate to  with a timestamp to force component remount and state reset
     router.push("/chat?t=" + Date.now());
   };
 
