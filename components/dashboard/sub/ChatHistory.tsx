@@ -12,6 +12,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
+import Link from "next/link";
 
 function PromptMenu({ chatId }: { chatId: string }) {
   const deleteChat = useMutation(api.functions.chat.deleteChat);
@@ -94,15 +95,10 @@ export default function ChatHistory() {
     user ? { userId: user._id as Id<"users"> } : "skip"
   );
 
-  const router = useRouter();
   const pathname = usePathname();
 
   const isChatActive = (chatId: string) => {
     return pathname === `/chat/${chatId}`;
-  };
-
-  const handleChatClick = (chatId: string) => {
-    router.push(`/chat/${chatId}`);
   };
 
   if (!chats) {
@@ -116,7 +112,7 @@ export default function ChatHistory() {
       <ListboxSection
         classNames={{
           base: "py-0",
-          heading: "py-0 pl-[10px] text-small y text-default-400",
+          heading: "py-0 pl-[10px] text-small y dark:text-white",
         }}
         title="All Chats"
       >
@@ -130,7 +126,8 @@ export default function ChatHistory() {
                   : ""
               }`}
               endContent={<PromptMenu chatId={chat.chatId} />}
-              onClick={() => handleChatClick(chat.chatId)}
+              as={Link}
+              href={`/chat/${chat.chatId}`}
             >
               <div className="truncate">{chat.title}</div>
             </ListboxItem>

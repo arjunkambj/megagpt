@@ -31,6 +31,7 @@ export default function Chat({
     status,
     onSubmit,
     isLoading,
+    messagesLoading,
   } = useChat(isDashboard, initialChatId);
 
   // Handle query parameter similar to ai-chatbot
@@ -47,6 +48,11 @@ export default function Chat({
 
   if (isLoading) {
     return <LoadingSpinner message={UI_CONFIG.LOADING_MESSAGES.CHAT} />;
+  }
+
+  // Show loading when messages are being fetched for existing chats
+  if (messagesLoading) {
+    return <LoadingSpinner message={UI_CONFIG.LOADING_MESSAGES.MESSAGES} />;
   }
 
   // Dashboard view (new chat)

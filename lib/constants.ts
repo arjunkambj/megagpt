@@ -13,8 +13,9 @@ export const UI_CONFIG = {
   MIN_MESSAGE_ROWS: 2,
   LOADING_MESSAGES: {
     CHAT: "Loading chat...",
-    AI_THINKING: "AI is thinking...",
+    AI_THINKING: "MegaGPT is thinking...",
     CHATS: "Loading chats...",
+    MESSAGES: "Loading chat...",
   },
 } as const;
 

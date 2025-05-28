@@ -79,8 +79,6 @@ export function useChat(isDashboard: boolean, initialChatId?: string) {
             chatId,
           });
         }
-
-        console.log("chatId", chatId);
         // Let useChat handle the message flow
         handleSubmit();
       } catch (error) {
@@ -100,5 +98,6 @@ export function useChat(isDashboard: boolean, initialChatId?: string) {
     status,
     onSubmit,
     isLoading: !user,
+    messagesLoading: !isDashboard && getMessages === undefined && !!chatId,
   };
 }
