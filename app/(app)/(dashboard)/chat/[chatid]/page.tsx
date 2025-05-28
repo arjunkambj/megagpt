@@ -12,7 +12,7 @@ export default async function ChatPage({ params }: ChatPageProps) {
 
   return (
     <section className="flex relative  justify-center items-center h-full w-full flex-col gap-4">
-      <Chat isDashboard={isDashboard} initialChatId={chatid} />
+      <Chat initialChatId={chatid} isDashboard={isDashboard} />
     </section>
   );
 }

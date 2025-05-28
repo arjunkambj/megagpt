@@ -1,4 +1,5 @@
 import { v } from "convex/values";
+
 import { mutation, query } from "../_generated/server";
 import { api } from "../_generated/api";
 
@@ -101,6 +102,7 @@ export const deleteChat = mutation({
 
     if (chat) {
       await ctx.db.delete(chat._id);
+
       return { success: true };
     }
 

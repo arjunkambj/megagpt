@@ -1,9 +1,10 @@
 import { useChat as useAIChat } from "@ai-sdk/react";
 import { useQuery, useMutation } from "convex/react";
-import { api } from "@/convex/_generated/api";
 import { useParams } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
 import { useMemo, useEffect, useCallback } from "react";
+
+import { api } from "@/convex/_generated/api";
 
 export function useChat(isDashboard: boolean, initialChatId?: string) {
   const params = useParams();
@@ -13,6 +14,7 @@ export function useChat(isDashboard: boolean, initialChatId?: string) {
     if (isDashboard) {
       return initialChatId || uuidv4();
     }
+
     return params?.chatid as string;
   }, [isDashboard, initialChatId, params?.chatid]);
 
@@ -21,7 +23,7 @@ export function useChat(isDashboard: boolean, initialChatId?: string) {
   // Only fetch messages for existing chats
   const getMessages = useQuery(
     api.functions.message.getMessages,
-    !isDashboard && chatId ? { chatId } : "skip"
+    !isDashboard && chatId ? { chatId } : "skip",
   );
 
   const createChat = useMutation(api.functions.chat.createChat);
@@ -50,7 +52,7 @@ export function useChat(isDashboard: boolean, initialChatId?: string) {
           id: message._id,
           content: message.content,
           role: message.role as "user" | "assistant",
-        }))
+        })),
       );
     }
   }, [getMessages, isDashboard, setMessages]);
@@ -85,7 +87,7 @@ export function useChat(isDashboard: boolean, initialChatId?: string) {
         console.error("Error submitting message:", error);
       }
     },
-    [input, user, isDashboard, createChat, chatId, handleSubmit]
+    [input, user, isDashboard, createChat, chatId, handleSubmit],
   );
 
   return {

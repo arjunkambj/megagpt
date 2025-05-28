@@ -5,13 +5,13 @@ import { Spacer } from "@heroui/spacer";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { ScrollShadow } from "@heroui/scroll-shadow";
 
 import { Logo } from "./Logo";
 import ChatHistory from "./ChatHistory";
 import AvatarDropdown from "./AvatarDropdown";
 
 import { useSidebarToggle } from "@/atoms/sidebarState";
-import { ScrollShadow } from "@heroui/scroll-shadow";
 
 export default function SidebarContent() {
   const { isOpen, onOpenChange, onClose } = useSidebarToggle();

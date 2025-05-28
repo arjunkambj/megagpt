@@ -2,6 +2,7 @@ import { NextRequest } from "next/server";
 import { openai } from "@ai-sdk/openai";
 import { streamText } from "ai";
 import { ConvexHttpClient } from "convex/browser";
+
 import { api } from "@/convex/_generated/api";
 import { CHAT_CONFIG, ERROR_MESSAGES } from "@/lib/constants";
 
@@ -62,6 +63,7 @@ export async function POST(request: NextRequest) {
           // Update chat title if this is the first exchange
           if (messages.length === 1 && messages[0].role === "user") {
             const title = generateChatTitle(messages[0].content);
+
             await convex.mutation(api.functions.chat.updateChatTitle, {
               chatId,
               title,
@@ -75,7 +77,9 @@ export async function POST(request: NextRequest) {
 
     return result.toDataStreamResponse();
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("Error in chat API:", error);
+
     return new Response(ERROR_MESSAGES.INTERNAL_ERROR, { status: 500 });
   }
 }

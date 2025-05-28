@@ -1,5 +1,6 @@
-import Chat from "@/components/dashboard/Chat";
 import { v4 as uuidv4 } from "uuid";
+
+import Chat from "@/components/dashboard/Chat";
 
 interface ChatPageProps {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -18,8 +19,8 @@ export default function ChatPage({ searchParams }: ChatPageProps) {
     <section className="flex items-center justify-center h-full w-full flex-col gap-4">
       <Chat
         key={componentKey}
-        isDashboard={isDashboard}
         initialChatId={chatId}
+        isDashboard={isDashboard}
       />
     </section>
   );

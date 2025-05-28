@@ -1,7 +1,7 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: "MegaGPT - Fasted AI ChatApp",
+  name: "MegaGPT - Advanced AI ChatApp",
   description: "MegaGPT is a chatapp that can help you with your tasks.",
   navItems: [
     {

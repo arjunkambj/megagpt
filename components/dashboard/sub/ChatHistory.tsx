@@ -8,11 +8,12 @@ import {
 } from "@heroui/dropdown";
 import { Icon } from "@iconify/react";
 import { Listbox, ListboxItem, ListboxSection } from "@heroui/listbox";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useQuery, useMutation } from "convex/react";
+import Link from "next/link";
+
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
-import Link from "next/link";
 
 function PromptMenu({ chatId }: { chatId: string }) {
   const deleteChat = useMutation(api.functions.chat.deleteChat);
@@ -92,7 +93,7 @@ export default function ChatHistory() {
   const user = useQuery(api.functions.user.currentUser);
   const chats = useQuery(
     api.functions.chat.getChatsByUserId,
-    user ? { userId: user._id as Id<"users"> } : "skip"
+    user ? { userId: user._id as Id<"users"> } : "skip",
   );
 
   const pathname = usePathname();
@@ -120,13 +121,13 @@ export default function ChatHistory() {
           return (
             <ListboxItem
               key={chat.chatId}
+              as={Link}
               className={`group px-3 text-default-500  cursor-pointer ${
                 isChatActive(chat.chatId)
                   ? "bg-default-100 rounded-xl text-default-900"
                   : ""
               }`}
               endContent={<PromptMenu chatId={chat.chatId} />}
-              as={Link}
               href={`/chat/${chat.chatId}`}
             >
               <div className="truncate">{chat.title}</div>

@@ -1,15 +1,17 @@
 "use client";
 
-import UserMessage from "./sub/user-message";
-import AssistanceMessage from "./sub/assistance-message";
-import PromptInput from "./PromptInput";
 import { Spinner } from "@heroui/spinner";
-import { useChat } from "@/hooks/useChat";
-import LoadingSpinner from "@/components/ui/LoadingSpinner";
-import { UI_CONFIG } from "@/lib/constants";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ScrollShadow } from "@heroui/scroll-shadow";
+
+import UserMessage from "./sub/user-message";
+import AssistanceMessage from "./sub/assistance-message";
+import PromptInput from "./PromptInput";
+
+import { useChat } from "@/hooks/useChat";
+import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import { UI_CONFIG } from "@/lib/constants";
 
 export default function Chat({
   isDashboard,
@@ -61,11 +63,11 @@ export default function Chat({
       <section className="flex h-full w-full items-center justify-center px-4 md:px-0">
         <div className="w-full md:max-w-2xl">
           <PromptInput
+            chatId={chatId}
             handleInputChange={handleInputChange}
             input={input}
             isDashboard={isDashboard}
             setInput={setInput}
-            chatId={chatId}
             onSubmit={onSubmit}
           />
         </div>
@@ -77,11 +79,11 @@ export default function Chat({
   return (
     <section className="flex h-full w-full items-center flex-col gap-4">
       <ScrollShadow
+        className="h-full w-full flex justify-center h-[calc(100vh-140px)] overflow-y-auto pt-20"
         size={10}
         visibility="auto"
-        className="h-full w-full flex justify-center h-[calc(100vh-140px)] overflow-y-auto px-4 md:px-0"
       >
-        <div className="flex w-full md:max-w-2xl pt-4 md:pt-8 flex-col gap-4 md:gap-5">
+        <div className="flex w-full md:max-w-2xl flex-col gap-4 md:gap-10">
           {messages.map((message) => (
             <div key={message.id}>
               {message.role === "user" ? (
@@ -97,10 +99,10 @@ export default function Chat({
             <div className="flex justify-start">
               <div className="flex items-center gap-2 p-3 md:p-4">
                 <Spinner
-                  color="primary"
-                  variant="wave"
-                  size="md"
                   className="flex-shrink-0"
+                  color="primary"
+                  size="md"
+                  variant="wave"
                 />
                 <span className="text-md text-default-500">
                   {UI_CONFIG.LOADING_MESSAGES.AI_THINKING}
@@ -114,11 +116,11 @@ export default function Chat({
       <div className="w-full px-4 md:px-0 flex justify-center">
         <div className="w-full md:max-w-2xl">
           <PromptInput
+            chatId={chatId}
             handleInputChange={handleInputChange}
             input={input}
             isDashboard={false}
             setInput={setInput}
-            chatId={chatId}
             onSubmit={onSubmit}
           />
         </div>

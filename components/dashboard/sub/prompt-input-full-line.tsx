@@ -84,7 +84,7 @@ export function PromptInputFullLineComponent({
         handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>);
       }
     },
-    [handleSubmit]
+    [handleSubmit],
   );
 
   const handlePaste = useCallback(async (e: React.ClipboardEvent) => {
@@ -135,14 +135,14 @@ export function PromptInputFullLineComponent({
 
   return (
     <Form
-      className="flex w-full shadow-none flex-col items-start gap-0 rounded-medium dark:bg-[#141414] border border-default-200/50"
+      className="flex w-full shadow-none flex-col items-start gap-0 rounded-medium dark:bg-[#141414] border border-default-200/40"
       validationBehavior="native"
       onSubmit={handleSubmit}
     >
       <div
         className={cn(
           "group flex gap-2 pl-[20px] pr-3",
-          assets.length > 0 ? "pt-4" : ""
+          assets.length > 0 ? "pt-4" : "",
         )}
       >
         <PromptInputAssets
@@ -210,7 +210,7 @@ export function PromptInputFullLineComponent({
           <Icon
             className={cn(
               "[&>path]:stroke-[2px]",
-              !prompt ? "text-default-600" : "text-primary-foreground"
+              !prompt ? "text-default-600" : "text-primary-foreground",
             )}
             icon="solar:arrow-up-linear"
             width={20}
