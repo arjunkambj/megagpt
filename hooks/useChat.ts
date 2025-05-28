@@ -84,6 +84,7 @@ export function useChat(isDashboard: boolean, initialChatId?: string) {
         // Let useChat handle the message flow
         handleSubmit();
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error submitting message:", error);
       }
     },

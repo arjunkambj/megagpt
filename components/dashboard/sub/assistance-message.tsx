@@ -32,6 +32,7 @@ export default function AssistanceMessage({ message }: { message: string }) {
         setCopiedStates((prev) => ({ ...prev, [id]: false }));
       }, 2000);
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error("Failed to copy text: ", err);
     }
   };

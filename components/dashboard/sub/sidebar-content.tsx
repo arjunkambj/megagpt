@@ -14,7 +14,7 @@ import AvatarDropdown from "./AvatarDropdown";
 import { useSidebarToggle } from "@/atoms/sidebarState";
 
 export default function SidebarContent() {
-  const { isOpen, onOpenChange, onClose } = useSidebarToggle();
+  const { onClose } = useSidebarToggle();
   const router = useRouter();
 
   const handleNewChat = () => {

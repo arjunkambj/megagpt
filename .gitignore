@@ -4,7 +4,6 @@
 /.pnp
 .pnp.js
 
-
 # testing
 /coverage
 
@@ -35,3 +34,5 @@ yarn-error.log*
 next-env.d.ts
 ai-chatbot
 .vscode
+
+

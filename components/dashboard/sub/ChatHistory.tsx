@@ -22,6 +22,7 @@ function PromptMenu({ chatId }: { chatId: string }) {
     try {
       await deleteChat({ chatId });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Error deleting chat:", error);
     }
   };
