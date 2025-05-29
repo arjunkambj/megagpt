@@ -107,6 +107,9 @@ importers:
       '@react-aria/visually-hidden':
         specifier: 3.8.22
         version: 3.8.22(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@types/luxon':
+        specifier: ^3.6.2
+        version: 3.6.2
       ai:
         specifier: ^4.3.16
         version: 4.3.16(react@18.3.1)(zod@3.25.20)
@@ -137,6 +140,9 @@ importers:
       jotai:
         specifier: ^2.12.4
         version: 2.12.4(@types/react@18.3.3)(react@18.3.1)
+      luxon:
+        specifier: ^3.6.1
+        version: 3.6.1
       next:
         specifier: 15.3.1
         version: 15.3.1(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1825,6 +1831,9 @@ packages:
   '@types/katex@0.16.7':
     resolution: {integrity: sha512-HMwFiRujE5PjrgwHQ25+bsLJgowjGjm5Z8FVSf0N6PwgJrwxH0QxzHYDcKsTfV3wva0vzrpqMTJS2jXPr5BMEQ==}
 
+  '@types/luxon@3.6.2':
+    resolution: {integrity: sha512-R/BdP7OxEMc44l2Ex5lSXHoIXTB2JLNa3y2QISIbr58U/YcsffyQrYW//hZSdrfxrjRZj3GcUoxMPGdO8gSYuw==}
+
   '@types/mdast@4.0.4':
     resolution: {integrity: sha512-kGaNbPh1k7AFzgpud/gMdvIm5xuECykRR+JnWKQno9TAXVa6WIVCGTPvYGekIDL4uwCZQSYbUxNBSb1aUo79oA==}
 
@@ -3097,6 +3106,10 @@ packages:
 
   lucia@3.2.2:
     resolution: {integrity: sha512-P1FlFBGCMPMXu+EGdVD9W4Mjm0DqsusmKgO7Xc33mI5X1bklmsQb0hfzPhXomQr9waWIBDsiOjvr1e6BTaUqpA==}
+
+  luxon@3.6.1:
+    resolution: {integrity: sha512-tJLxrKJhO2ukZ5z0gyjY1zPh3Rh88Ej9P7jNrZiHMUXHae1yvI2imgOZtL1TO8TW6biMMKfTtAOoEJANgtWBMQ==}
+    engines: {node: '>=12'}
 
   markdown-table@3.0.4:
     resolution: {integrity: sha512-wiYz4+JrLyb/DqW2hkFJxP7Vd7JuTDm77fvbM8VfEQdmSMqcImWeeRbHwZjBjIFki/VaMK2BhFi7oUUZeM5bqw==}
@@ -5921,6 +5934,8 @@ snapshots:
 
   '@types/katex@0.16.7': {}
 
+  '@types/luxon@3.6.2': {}
+
   '@types/mdast@4.0.4':
     dependencies:
       '@types/unist': 3.0.3
@@ -7396,6 +7411,8 @@ snapshots:
     dependencies:
       '@oslojs/crypto': 1.0.1
       '@oslojs/encoding': 1.1.0
+
+  luxon@3.6.1: {}
 
   markdown-table@3.0.4: {}
 

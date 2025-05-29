@@ -2,8 +2,6 @@
 export const CHAT_CONFIG = {
   MAX_TITLE_LENGTH: 50,
   DEFAULT_CHAT_TITLE: "New Chat",
-  SYSTEM_PROMPT:
-    "You are a helpful assistant that can answer questions and help with tasks.",
 } as const;
 
 // UI configuration

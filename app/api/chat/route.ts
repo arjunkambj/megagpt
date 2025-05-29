@@ -3,10 +3,11 @@ import { openai } from "@ai-sdk/openai";
 import { streamText } from "ai";
 import { ConvexHttpClient } from "convex/browser";
 import { google } from "@ai-sdk/google";
+import { DateTime } from "luxon";
 
 import { generateTitleFromUserMessage } from "@/actions/ai-action";
 import { api } from "@/convex/_generated/api";
-import { CHAT_CONFIG, ERROR_MESSAGES } from "@/lib/constants";
+import { ERROR_MESSAGES } from "@/lib/constants";
 
 const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
@@ -22,7 +23,10 @@ export async function POST(request: NextRequest) {
       return new Response(ERROR_MESSAGES.USER_ID_REQUIRED, { status: 400 });
     }
 
-    const systemPrompt = CHAT_CONFIG.SYSTEM_PROMPT;
+    const systemPrompt =
+      "You are a helpful assistant that can answer questions and help with tasks. and current date and time is " +
+      DateTime.now().toFormat("yyyy-MM-dd HH:mm:ss") +
+      " in UTC timezone";
 
     const userModel = [
       openai("gpt-4o-mini"),
@@ -33,7 +37,7 @@ export async function POST(request: NextRequest) {
     // Ensure modelId is within valid range
     const selectedModelIndex = Math.max(
       0,
-      Math.min(modelId, userModel.length - 1),
+      Math.min(modelId, userModel.length - 1)
     );
     const selectedModel = userModel[selectedModelIndex];
 
