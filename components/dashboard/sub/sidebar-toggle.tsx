@@ -6,17 +6,17 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { useSidebarToggle } from "@/atoms/sidebarState";
 
 export default function SidebarToggle() {
-  const { onOpen } = useSidebarToggle();
+  const { toggleSidebar } = useSidebarToggle();
 
   return (
     <Button
       isIconOnly
       aria-label="Open sidebar menu"
       variant="flat"
-      onPress={onOpen}
+      onPress={toggleSidebar}
     >
       <Icon
-        className="text-default-500"
+        className="text-default-700"
         height={24}
         icon="mynaui:sidebar"
         width={24}

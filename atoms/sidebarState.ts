@@ -6,9 +6,9 @@ export const sidebarOpenAtom = atom(false);
 export function useSidebarToggle() {
   const [isOpen, setIsOpen] = useAtom(sidebarOpenAtom);
 
-  const onOpen = () => setIsOpen(true);
-  const onClose = () => setIsOpen(false);
-  const onOpenChange = (open: boolean) => setIsOpen(open);
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
 
-  return { isOpen, onOpen, onClose, onOpenChange };
+  return { isOpen, toggleSidebar };
 }

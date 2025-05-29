@@ -14,7 +14,7 @@ import AvatarDropdown from "./AvatarDropdown";
 import { useSidebarToggle } from "@/atoms/sidebarState";
 
 export default function SidebarContent() {
-  const { onClose } = useSidebarToggle();
+  const { isOpen } = useSidebarToggle();
   const router = useRouter();
 
   const handleNewChat = () => {
@@ -23,7 +23,11 @@ export default function SidebarContent() {
   };
 
   return (
-    <div className="relative dark:bg-[#0A0A0A] flex h-full max-w-[270px]  w-[270px] flex-1 flex-col p-6">
+    <div
+      className={`relative dark:bg-[#0A0A0A]  flex h-full max-w-[270px] w-[270px] flex-1 flex-col p-6 ${
+        isOpen ? "block" : "hidden"
+      }`}
+    >
       {/* Logo and Close Button */}
       <div className="flex items-center justify-between px-2">
         <div className="flex items-center gap-2">
@@ -41,7 +45,6 @@ export default function SidebarContent() {
           aria-label="Close sidebar"
           className="sm:hidden absolute right-0 top-0"
           variant="light"
-          onPress={onClose}
         >
           <Icon icon="solar:close-circle-line-duotone" width={24} />
         </Button>
