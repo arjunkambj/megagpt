@@ -31,7 +31,7 @@ export default function Component() {
         <div className="flex items-center">
           <Button
             as={Link}
-            className="bg-transparent hover:text-teal-500 transition-colors"
+            className="bg-transparent hover:text-emerald-600 transition-colors"
             href="/"
             variant="flat"
           >
@@ -51,8 +51,8 @@ export default function Component() {
         {/* Subtle background elements */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute inset-0 opacity-10 mix-blend-soft-light bg-[url('data:image/svg+xml;utf8,<svg width=\'40\' height=\'40\' viewBox=\'0 0 40 40\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'><rect x=\'0.5\' y=\'0.5\' width=\'39\' height=\'39\' rx=\'1.5\' fill=\'none\' stroke=\'%23ffffff33\' stroke-dasharray=\'2 2\'/></svg>')]" />
-          <div className="absolute top-1/4 left-1/4 w-1 h-1 bg-teal-400/30 rounded-full animate-float-slow" />
-          <div className="absolute top-3/4 left-1/2 w-2 h-2 bg-cyan-400/20 rounded-full animate-float-medium" />
+          <div className="absolute top-1/4 left-1/4 w-1 h-1 bg-emerald-600/30 rounded-full animate-float-slow" />
+          <div className="absolute top-3/4 left-1/2 w-2 h-2 bg-emerald-500/20 rounded-full animate-float-medium" />
           <div className="absolute top-1/3 left-3/4 w-1.5 h-1.5 bg-emerald-400/20 rounded-full animate-float-fast" />
         </div>
 
@@ -63,7 +63,7 @@ export default function Component() {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <div className="w-full text-left">
-            <p className="pb-2 text-xl font-medium bg-clip-text text-transparent bg-gradient-to-r from-teal-400 to-cyan-500">
+            <p className="pb-2 text-xl font-medium bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 to-emerald-400">
               Welcome Back
             </p>
             <p className="text-small text-default-500">
@@ -125,7 +125,7 @@ export default function Component() {
           </div>
 
           <Button
-            className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white hover:opacity-90 transition-all shadow-lg hover:shadow-cyan-500/20"
+            className="w-full bg-gradient-to-r from-emerald-600 to-emerald-500 text-white hover:opacity-90 transition-all shadow-lg hover:shadow-emerald-500/20"
             startContent={<Icon icon="cryptocurrency:sol" width={24} />}
             onPress={handelSolanaLogin}
           >
@@ -147,7 +147,7 @@ export default function Component() {
           <div
             className="absolute inset-0 z-0"
             style={{
-              backgroundImage: "url(/bg.avif)",
+              backgroundImage: "url(/bg.png)",
               backgroundSize: "cover",
               backgroundPosition: "center",
               filter: "brightness(0.7) contrast(1.1)",
@@ -155,12 +155,12 @@ export default function Component() {
           />
 
           {/* Advanced animated overlay */}
-          <div className="absolute inset-0 bg-gradient-to-tr from-teal-900/30 via-cyan-900/20 to-transparent opacity-70 z-20" />
-          <div className="absolute inset-0 opacity-10 mix-blend-overlay bg-[url('data:image/svg+xml;utf8,<svg width=\'100%\' height=\'100%\' xmlns=\'http://www.w3.org/2000/svg\'><defs><pattern id=\'grid\' width=\'80\' height=\'80\' patternUnits=\'userSpaceOnUse\'><path d=\'M 80 0 L 0 0 0 80\' fill=\'none\' stroke=\'%230369a1\' stroke-width=\'1\' opacity=\'0.3\'/></pattern></defs><rect width=\'100%\' height=\'100%\' fill=\'url(%23grid)\' /></svg>')] z-20" />
+          <div className="absolute inset-0 bg-gradient-to-tr from-emerald-900/30 via-emerald-800/20 to-transparent opacity-70 z-20" />
+          <div className="absolute inset-0 opacity-10 mix-blend-overlay bg-[url('data:image/svg+xml;utf8,<svg width=\'100%\' height=\'100%\' xmlns=\'http://www.w3.org/2000/svg\'><defs><pattern id=\'grid\' width=\'80\' height=\'80\' patternUnits=\'userSpaceOnUse\'><path d=\'M 80 0 L 0 0 0 80\' fill=\'none\' stroke=\'%2316a34a\' stroke-width=\'1\' opacity=\'0.3\'/></pattern></defs><rect width=\'100%\' height=\'100%\' fill=\'url(%23grid)\' /></svg>')] z-20" />
 
           {/* Decorative 3D elements */}
-          <div className="absolute top-[20%] right-[30%] w-32 h-32 rounded-full bg-gradient-to-r from-teal-500/10 to-cyan-500/5 blur-[60px] animate-pulse-slow z-10" />
-          <div className="absolute bottom-[30%] left-[20%] w-40 h-40 rounded-full bg-gradient-to-r from-cyan-500/10 to-teal-500/5 blur-[80px] animate-pulse-medium z-10" />
+          <div className="absolute top-[20%] right-[30%] w-32 h-32 rounded-full bg-gradient-to-r from-emerald-600/10 to-emerald-500/5 blur-[60px] animate-pulse-slow z-10" />
+          <div className="absolute bottom-[30%] left-[20%] w-40 h-40 rounded-full bg-gradient-to-r from-emerald-500/10 to-emerald-600/5 blur-[80px] animate-pulse-medium z-10" />
 
           {/* Floating geometric shapes */}
           <motion.div
@@ -169,14 +169,14 @@ export default function Component() {
             initial={{ opacity: 0, rotateZ: 0 }}
             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
           >
-            <div className="w-full h-full border border-teal-500/20 rounded-lg opacity-30 transform rotate-45" />
+            <div className="w-full h-full border border-emerald-600/20 rounded-lg opacity-30 transform rotate-45" />
             <div className="absolute inset-5 border border-emerald-500/20 rounded-lg opacity-20 transform rotate-[30deg]" />
-            <div className="absolute inset-10 border border-cyan-500/20 rounded-lg opacity-10 transform rotate-[15deg]" />
+            <div className="absolute inset-10 border border-emerald-400/20 rounded-lg opacity-10 transform rotate-[15deg]" />
           </motion.div>
 
           {/* Glowing points of light */}
-          <div className="absolute top-[40%] right-[15%] w-2 h-2 bg-teal-400 rounded-full opacity-60 blur-[2px] animate-glow" />
-          <div className="absolute top-[30%] left-[25%] w-1.5 h-1.5 bg-cyan-400 rounded-full opacity-60 blur-[1px] animate-glow-delay" />
+          <div className="absolute top-[40%] right-[15%] w-2 h-2 bg-emerald-600 rounded-full opacity-60 blur-[2px] animate-glow" />
+          <div className="absolute top-[30%] left-[25%] w-1.5 h-1.5 bg-emerald-500 rounded-full opacity-60 blur-[1px] animate-glow-delay" />
           <div className="absolute bottom-[20%] right-[35%] w-1 h-1 bg-emerald-400 rounded-full opacity-60 blur-[1px] animate-glow-long" />
         </div>
 
@@ -189,7 +189,7 @@ export default function Component() {
         >
           <div className="backdrop-blur-md bg-white/10 p-8 rounded-lg shadow-lg border border-white/10 w-full max-w-md">
             {/* Quote icon */}
-            <div className="absolute -top-4 -right-4 w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-r from-teal-500 to-cyan-500 shadow-lg">
+            <div className="absolute -top-4 -right-4 w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-r from-emerald-600 to-emerald-500 shadow-lg">
               <svg
                 className="opacity-80"
                 fill="white"
@@ -218,7 +218,7 @@ export default function Component() {
                 </p>
               </div>
               <div className="h-12 w-12 relative">
-                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-teal-500 to-cyan-500 blur-[1px] opacity-70" />
+                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-500 blur-[1px] opacity-70" />
                 <Image
                   alt="Sarah Chen"
                   className="h-12 w-12 rounded-full object-cover border-2 border-white/30 relative z-10"

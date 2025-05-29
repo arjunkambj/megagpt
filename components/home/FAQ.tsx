@@ -1,22 +1,31 @@
 "use client";
 
 import React from "react";
-import { Accordion, AccordionItem } from "@heroui/accordion";
 import { Icon } from "@iconify/react";
 
 import faqs from "./sub/faq-data";
 
 export default function Component() {
+  const [openItems, setOpenItems] = React.useState<Set<number>>(new Set());
+
+  const toggleItem = (index: number) => {
+    const newOpenItems = new Set(openItems);
+
+    if (newOpenItems.has(index)) {
+      newOpenItems.delete(index);
+    } else {
+      newOpenItems.add(index);
+    }
+    setOpenItems(newOpenItems);
+  };
+
   return (
-    <section
-      className="relative mx-auto w-full max-w-6xl px-0 pt-10 md:pt-20 pb-15  md:pb-28 md:px-6 lg:px-8"
-      id="faq"
-    >
-      <div className="mx-auto flex w-full max-w-4xl flex-col gap-16">
-        <div className="relative z-10 mx-auto max-w-4xl text-center">
+    <section className="relative w-full py-16 md:py-20" id="faq">
+      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+        <div className="relative z-10 mx-auto max-w-4xl text-center mb-16">
           <div className="">
             <h2
-              className="font-medium text-teal-400"
+              className="font-medium text-emerald-600 text-sm uppercase tracking-wider"
               data-aos="fade-up"
               data-aos-delay="100"
             >
@@ -24,14 +33,14 @@ export default function Component() {
             </h2>
           </div>
           <h1
-            className="text-4xl font-medium tracking-tight text-white"
+            className="mt-4 text-4xl md:text-5xl font-bold tracking-tight text-white"
             data-aos="fade-up"
             data-aos-delay="200"
           >
             Frequently Asked Questions
           </h1>
           <p
-            className="mt-6 text-large text-white/80"
+            className="mt-6 text-lg text-white/60"
             data-aos="fade-up"
             data-aos-delay="300"
           >
@@ -39,34 +48,57 @@ export default function Component() {
           </p>
         </div>
 
-        <Accordion
-          fullWidth
-          keepContentMounted
-          className="gap-3"
-          data-aos="fade-up"
-          data-aos-delay="400"
-          itemClasses={{
-            base: "px-6 border border-white/20 bg-black/40 backdrop-blur-md shadow-md hover:bg-black/50 rounded-xl",
-            title: "font-medium text-white",
-            trigger: "py-6",
-            content: "pt-0 pb-6 text-base text-white/70",
-          }}
-          items={faqs}
-          selectionMode="multiple"
-          variant="splitted"
-        >
-          {faqs.map((item, i) => (
-            <AccordionItem
-              key={i}
-              indicator={
-                <Icon className="text-teal-400" icon="lucide:plus" width={24} />
-              }
-              title={item.title}
+        <div className="space-y-2">
+          {faqs.map((item, index) => (
+            <div
+              key={index}
+              className="group relative"
+              data-aos="fade-up"
+              data-aos-delay={100 + index * 50}
             >
-              {item.content}
-            </AccordionItem>
+              {/* Background with consistent glass-morphism styling */}
+              <div className="absolute inset-0 rounded-xl border border-white/10 bg-gradient-to-b from-white/5 to-white/2 backdrop-blur-sm transition-all duration-300 group-hover:border-white/20 group-hover:from-white/10 group-hover:to-white/5" />
+
+              <div className="relative">
+                {/* Question */}
+                <button
+                  className="w-full p-6 text-left focus:outline-none"
+                  onClick={() => toggleItem(index)}
+                >
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-lg font-medium text-white group-hover:text-white/90 transition-colors duration-300">
+                      {item.title}
+                    </h3>
+                    <Icon
+                      className={`text-emerald-600 transition-transform duration-300 flex-shrink-0 ml-4 ${
+                        openItems.has(index) ? "rotate-45" : ""
+                      }`}
+                      icon="lucide:plus"
+                      width={18}
+                    />
+                  </div>
+                </button>
+
+                {/* Answer */}
+                <div
+                  className={`overflow-hidden transition-all duration-300 ${
+                    openItems.has(index)
+                      ? "max-h-96 opacity-100"
+                      : "max-h-0 opacity-0"
+                  }`}
+                >
+                  <div className="px-6 pb-6">
+                    <div className="border-t border-white/5 pt-4">
+                      <p className="text-white/60 leading-relaxed text-sm">
+                        {item.content}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           ))}
-        </Accordion>
+        </div>
       </div>
     </section>
   );

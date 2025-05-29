@@ -1,8 +1,5 @@
 import React from "react";
-import { Card, CardBody, CardFooter, CardHeader } from "@heroui/card";
-import { Button } from "@heroui/button";
 import { Icon } from "@iconify/react";
-import { Divider } from "@heroui/divider";
 
 const featureItems = [
   {
@@ -45,26 +42,12 @@ const featureItems = [
 
 export default function Features() {
   return (
-    <section className="relative w-full py-10 md:py-16" id="features">
-      {/* Background gradient effect */}
-      {/* <div
-        aria-hidden="true"
-        className="fixed inset-x-0 top-3 z-0 h-full w-full transform-gpu overflow-hidden blur-3xl md:right-20 md:h-auto md:w-auto md:px-36"
-      >
-        <div
-          className="mx-auto aspect-[1155/678] w-[72.1875rem] bg-gradient-to-tr from-primary-500 to-secondary-500 opacity-30 dark:opacity-[.15]"
-          style={{
-            clipPath:
-              "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
-          }}
-        />
-      </div> */}
-
+    <section className="relative w-full py-16 md:py-20" id="features">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="relative z-10 mx-auto max-w-4xl text-center">
+        <div className="relative z-10 mx-auto max-w-4xl text-center mb-16">
           <div className="">
             <h2
-              className="font-medium text-teal-400"
+              className="font-medium text-emerald-600 text-sm uppercase tracking-wider"
               data-aos="fade-up"
               data-aos-delay="100"
             >
@@ -72,64 +55,49 @@ export default function Features() {
             </h2>
           </div>
           <h1
-            className="mt-5 text-4xl font-medium tracking-tight text-white"
+            className="mt-4 text-4xl md:text-5xl font-bold tracking-tight text-white"
             data-aos="fade-up"
             data-aos-delay="200"
           >
-            Advanced Web3 Capabilities
+            Benefits designed to provide a seamless, secure, and accessible
+            experience for all users.
           </h1>
-          <p
-            className="mt-6 text-large text-white/80"
-            data-aos="fade-up"
-            data-aos-delay="300"
-          >
-            Mega GPT combines cutting-edge AI with Web3 technology to create a
-            unique platform with powerful capabilities.
-          </p>
         </div>
 
-        <div className="relative z-10 mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="relative z-10 grid gap-8 md:gap-12 sm:grid-cols-2 lg:grid-cols-3">
           {featureItems.map((feature, index) => (
-            <Card
+            <div
               key={index}
-              className="rounded-xl border border-white/20 bg-black/40 p-3 backdrop-blur-md shadow-xl transition-all duration-200 hover:scale-[1.02]"
+              className="group relative"
               data-aos="fade-up"
               data-aos-delay={100 + index * 50}
             >
-              <CardHeader className="flex items-start gap-4 pb-2">
-                <div className="flex h-14 w-14 items-center justify-center rounded-full border border-white/20 bg-teal-500/20">
-                  <Icon
-                    className="text-teal-400"
-                    icon={feature.icon}
-                    width={28}
-                  />
+              {/* Background card - visible by default, enhanced on hover */}
+              <div className="absolute inset-0 rounded-2xl border border-white/10 bg-gradient-to-b from-white/5 to-white/2 backdrop-blur-sm transition-all duration-300 group-hover:border-white/20 group-hover:from-white/10 group-hover:to-white/5" />
+
+              <div className="relative p-8">
+                {/* Icon */}
+                <div className="mb-6">
+                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-white/10 backdrop-blur-sm group-hover:bg-emerald-600/20 transition-colors duration-300">
+                    <Icon
+                      className="text-white group-hover:text-emerald-400 transition-colors duration-300"
+                      icon={feature.icon}
+                      width={24}
+                    />
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-white">
+
+                {/* Content */}
+                <div className="space-y-4">
+                  <h3 className="text-xl font-semibold text-white group-hover:text-emerald-400 transition-colors duration-300">
                     {feature.title}
                   </h3>
+                  <p className="text-white/60 leading-relaxed text-sm group-hover:text-white/80 transition-colors duration-300">
+                    {feature.description}
+                  </p>
                 </div>
-              </CardHeader>
-              <Divider className="my-2 bg-white/20" />
-              <CardBody className="py-2">
-                <p className="text-white/70">{feature.description}</p>
-              </CardBody>
-              <CardFooter>
-                <Button
-                  className="text-white hover:text-teal-400 transition-colors font-medium"
-                  endContent={
-                    <Icon
-                      className="[&>path]:stroke-[2]"
-                      icon="solar:arrow-right-linear"
-                      width={18}
-                    />
-                  }
-                  variant="light"
-                >
-                  Learn more
-                </Button>
-              </CardFooter>
-            </Card>
+              </div>
+            </div>
           ))}
         </div>
       </div>

@@ -22,14 +22,14 @@ const config = {
         light: {
           layout: {}, // light theme layout tokens
           colors: {
-            primary: "#be185d",
+            primary: "#10b981",
             secondary: "#0f0f0f",
           }, // light theme colors
         },
         dark: {
           layout: {}, // dark theme layout tokens
           colors: {
-            primary: "#be185d",
+            primary: "#059669",
             secondary: "#ffffff",
           }, // dark theme colors
         },

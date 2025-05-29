@@ -5,62 +5,76 @@ import Link from "next/link";
 
 export default function Component() {
   return (
-    <div className="flex max-w-screen flex-col py-10 md:py-20">
-      <main className="flex flex-col items-center rounded-2xl px-3 md:rounded-3xl md:px-0">
-        <section className="z-20 my-14 flex flex-col items-center justify-center gap-[18px] sm:gap-6">
-          <Button
-            className="h-9 overflow-hidden border border-white/20 bg-black/40 backdrop-blur-md px-[18px] py-2 text-small font-normal leading-5 text-white"
-            endContent={
+    <section className="relative w-full h-[75vh] flex items-center justify-center">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="relative z-20 mx-auto max-w-4xl text-center">
+          {/* Badge */}
+          <div className="mb-8" data-aos="fade-up" data-aos-delay="100">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-gradient-to-b from-white/5 to-white/2 backdrop-blur-sm px-4 py-2 text-sm text-white/90">
               <Icon
-                className="flex-none outline-none text-white [&>path]:stroke-[2]"
+                className="text-emerald-600"
                 icon="solar:arrow-right-linear"
-                width={20}
+                width={16}
               />
-            }
-            radius="full"
-            variant="bordered"
-          >
-            All AI models in one place
-          </Button>
-          <div className="text-center text-[clamp(44px,12vw,52px)] font-bold leading-[1.15] tracking-tighter sm:text-[72px]">
-            <div className="text-white">
-              One platform, <br /> every AI at your fingertips.
+              All AI models in one place
             </div>
           </div>
-          <p className="text-center font-normal leading-7 text-white/80 sm:w-[466px] sm:text-[18px]">
+
+          {/* Main Heading */}
+          <h1
+            className="text-5xl md:text-7xl font-bold leading-[1.1] tracking-tight text-white mb-8"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
+            One platform, <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/80">
+              every AI at your fingertips.
+            </span>
+          </h1>
+
+          {/* Description */}
+          <p
+            className="text-lg md:text-xl text-white/60 leading-relaxed max-w-2xl mx-auto mb-12"
+            data-aos="fade-up"
+            data-aos-delay="300"
+          >
             MegaGPT unifies GPT-4, Claude, Gemini, and more in a single
             subscription. Save money, save time, and get the best answers—every
             time.
           </p>
-          <div className="flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-6">
+
+          {/* CTA Buttons */}
+          <div
+            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+            data-aos="fade-up"
+            data-aos-delay="400"
+          >
             <Button
               as={Link}
-              className="h-10 w-[163px] border border-white/20 bg-white/10 backdrop-blur-md px-[16px] py-[10px] text-small font-medium leading-5 text-white hover:bg-white/20 transition-colors"
+              className="rounded-full"
+              color="primary"
               href="/login"
-              radius="full"
-              variant="bordered"
             >
               Get Started Free
             </Button>
             <Button
               as={Link}
-              className="h-10 w-[163px] border border-white/20 bg-black/40 backdrop-blur-md px-[16px] py-[10px] text-small font-medium leading-5 text-white hover:bg-black/50 transition-colors"
+              className="rounded-full"
               endContent={
                 <Icon
-                  className="text-white ml-1 [&>path]:stroke-[1.5]"
+                  className="text-white"
                   icon="solar:stars-minimalistic-linear"
                   width={18}
                 />
               }
               href="/pricing"
-              radius="full"
               variant="bordered"
             >
               Subscribe Now
             </Button>
           </div>
-        </section>
-      </main>
-    </div>
+        </div>
+      </div>
+    </section>
   );
 }

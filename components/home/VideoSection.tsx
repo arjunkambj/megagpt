@@ -1,132 +1,66 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
-import { LazyMotion, domAnimation, m, useAnimation } from "framer-motion";
-import dynamic from "next/dynamic";
+import React from "react";
 
-// Create a client-only component with no SSR to prevent hydration issues
-const VideoSection = () => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
-  const animationControls = useAnimation();
-
-  // Only run client-side code after component is mounted
-  useEffect(() => {
-    setIsMounted(true);
-
-    const handleVideoLoaded = () => {
-      setIsLoaded(true);
-    };
-
-    const video = videoRef.current;
-
-    if (video) {
-      if (video.readyState >= 3) {
-        setIsLoaded(true);
-      } else {
-        video.addEventListener("loadeddata", handleVideoLoaded);
-      }
-
-      return () => {
-        video.removeEventListener("loadeddata", handleVideoLoaded);
-      };
-    }
-  }, []);
-
-  useEffect(() => {
-    if (isLoaded) {
-      animationControls.start("visible");
-    }
-  }, [isLoaded, animationControls]);
-
-  // Return null during SSR
-  if (!isMounted) {
-    return (
-      <section className="w-full h-screen fixed top-0 left-0 right-0 bottom-0 bg-black z-0 overflow-hidden" />
-    );
-  }
-
+const BackgroundSection = () => {
   return (
     <section
       aria-hidden="true"
-      className="w-full h-screen fixed top-0 left-0 right-0 bottom-0 bg-black z-0 overflow-hidden"
+      className="w-full h-screen fixed top-0 left-0 right-0 bottom-0 z-0 overflow-hidden"
     >
       <div className="h-screen w-full relative">
-        {/* Video Background with Fade-in Animation */}
-        <LazyMotion features={domAnimation}>
-          <m.div
-            animate={animationControls}
-            className="w-full h-full"
-            initial="hidden"
-            transition={{ duration: 1.2, ease: "easeOut" }}
-            variants={{
-              hidden: { opacity: 0 },
-              visible: { opacity: 1 },
-            }}
-          >
-            {!isLoaded && (
-              <div className="absolute inset-0 bg-black flex items-center justify-center">
-                <div className="w-10 h-10 border-t-2 border-blue-500 rounded-full animate-spin" />
-              </div>
-            )}
-            <video
-              ref={videoRef}
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="w-full h-full object-fill"
-              preload="auto"
-            >
-              <source src="/public.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </m.div>
-        </LazyMotion>
+        {/* Base gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-950 to-black" />
 
-        {/* Enhanced Visual Overlays */}
-        <div className="absolute inset-0 pointer-events-none">
-          {/* Base dark overlay with blur - less dark */}
-          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
+        {/* Subtle grid pattern */}
+        <div
+          className="absolute inset-0 opacity-[0.02]"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+          }}
+        />
 
-          {/* Enhanced blue gradient overlay - more dynamic */}
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/30 via-transparent to-indigo-900/20" />
+        {/* Animated gradient orbs */}
+        <div className="absolute inset-0">
+          {/* Large emerald orb */}
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-600/6 rounded-full blur-3xl animate-pulse" />
 
-          {/* Improved Grid pattern with animation */}
-          <div className="absolute inset-0 opacity-15 mix-blend-soft-light bg-[url('data:image/svg+xml;utf8,<svg width=\'40\' height=\'40\' viewBox=\'0 0 40 40\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'><rect x=\'0.5\' y=\'0.5\' width=\'39\' height=\'39\' rx=\'1.5\' fill=\'none\' stroke=\'%23ffffff33\' stroke-dasharray=\'2 2\'/></svg>')] animate-pulse" />
+          {/* Medium emerald orb */}
+          <div className="absolute bottom-1/3 right-1/4 w-64 h-64 bg-emerald-500/4 rounded-full blur-2xl animate-pulse delay-1000" />
 
-          {/* Horizontal line pattern with blue tint - more sophisticated with subtle animation */}
-          <div className="absolute inset-0 opacity-20 mix-blend-overlay bg-[url('data:image/svg+xml;utf8,<svg width=\'100%\' height=\'100%\' xmlns=\'http://www.w3.org/2000/svg\'><defs><pattern id=\'grid\' width=\'80\' height=\'80\' patternUnits=\'userSpaceOnUse\'><path d=\'M 80 0 L 0 0 0 80\' fill=\'none\' stroke=\'%230369a1\' stroke-width=\'1\' opacity=\'0.3\'/></pattern></defs><rect width=\'100%\' height=\'100%\' fill=\'url(%23grid)\' /></svg>')]" />
-
-          {/* Added floating particles effect */}
-          <div className="absolute inset-0">
-            <div className="absolute top-1/4 left-1/4 w-1 h-1 bg-blue-400/40 rounded-full animate-float-slow" />
-            <div className="absolute top-3/4 left-1/2 w-2 h-2 bg-blue-400/30 rounded-full animate-float-medium" />
-            <div className="absolute top-1/3 left-3/4 w-1.5 h-1.5 bg-indigo-400/20 rounded-full animate-float-fast" />
-            <div className="absolute top-2/3 left-1/5 w-1 h-1 bg-cyan-400/30 rounded-full animate-float-medium" />
-          </div>
-
-          {/* Improved vignette effect */}
-          <div className="absolute inset-0 bg-radial-gradient pointer-events-none" />
+          {/* Small accent orb */}
+          <div className="absolute top-1/2 right-1/3 w-32 h-32 bg-emerald-400/3 rounded-full blur-xl animate-pulse delay-2000" />
         </div>
+
+        {/* Subtle noise texture */}
+        <div
+          className="absolute inset-0 opacity-[0.01] mix-blend-overlay"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+          }}
+        />
+
+        {/* Floating particles */}
+        <div className="absolute inset-0">
+          <div className="absolute top-[20%] left-[15%] w-1 h-1 bg-emerald-400/15 rounded-full animate-float-slow" />
+          <div className="absolute top-[60%] left-[80%] w-1.5 h-1.5 bg-emerald-500/10 rounded-full animate-float-medium" />
+          <div className="absolute top-[40%] left-[60%] w-0.5 h-0.5 bg-emerald-300/20 rounded-full animate-float-fast" />
+          <div className="absolute top-[80%] left-[30%] w-1 h-1 bg-emerald-400/15 rounded-full animate-float-slow delay-1000" />
+          <div className="absolute top-[25%] left-[70%] w-0.5 h-0.5 bg-emerald-500/10 rounded-full animate-float-medium delay-2000" />
+        </div>
+
+        {/* Vignette effect */}
+        <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-black/40" />
       </div>
 
-      {/* Add CSS for the vignette radial gradient and floating animations */}
+      {/* CSS for animations */}
       <style>{`
-        .bg-radial-gradient {
-          background: radial-gradient(
-            circle,
-            transparent 30%,
-            rgba(0, 0, 0, 0.4) 100%
-          );
-        }
         @keyframes float-slow {
           0%,
           100% {
             transform: translateY(0) translateX(0);
           }
           50% {
-            transform: translateY(-15px) translateX(5px);
+            transform: translateY(-20px) translateX(10px);
           }
         }
         @keyframes float-medium {
@@ -135,7 +69,7 @@ const VideoSection = () => {
             transform: translateY(0) translateX(0);
           }
           50% {
-            transform: translateY(-10px) translateX(-7px);
+            transform: translateY(-15px) translateX(-8px);
           }
         }
         @keyframes float-fast {
@@ -144,26 +78,28 @@ const VideoSection = () => {
             transform: translateY(0) translateX(0);
           }
           50% {
-            transform: translateY(-20px) translateX(3px);
+            transform: translateY(-25px) translateX(5px);
           }
         }
         .animate-float-slow {
-          animation: float-slow 8s ease-in-out infinite;
+          animation: float-slow 12s ease-in-out infinite;
         }
         .animate-float-medium {
-          animation: float-medium 6s ease-in-out infinite;
+          animation: float-medium 8s ease-in-out infinite;
         }
         .animate-float-fast {
-          animation: float-fast 4s ease-in-out infinite;
+          animation: float-fast 6s ease-in-out infinite;
+        }
+        .bg-gradient-radial {
+          background: radial-gradient(
+            circle,
+            transparent 40%,
+            rgba(0, 0, 0, 0.2) 100%
+          );
         }
       `}</style>
     </section>
   );
 };
 
-// Create a version with no SSR to avoid hydration issues
-const VideoSectionNoSSR = dynamic(() => Promise.resolve(VideoSection), {
-  ssr: false,
-});
-
-export default VideoSectionNoSSR;
+export default BackgroundSection;
