@@ -70,7 +70,7 @@ export default function Component() {
         </ul>
       </div>
     ),
-    []
+    [],
   );
 
   return (

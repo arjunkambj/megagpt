@@ -13,13 +13,17 @@ import AvatarDropdown from "./AvatarDropdown";
 
 import { useSidebarToggle } from "@/atoms/sidebarState";
 
-export default function SidebarContent() {
+export default function SidebarContent({ onClose }: { onClose: () => void }) {
   const { isOpen } = useSidebarToggle();
   const router = useRouter();
 
   const handleNewChat = () => {
     // Navigate to  with a timestamp to force component remount and state reset
     router.push("/chat?t=" + Date.now());
+
+    if (onClose) {
+      onClose();
+    }
   };
 
   return (
@@ -45,6 +49,7 @@ export default function SidebarContent() {
           aria-label="Close sidebar"
           className="sm:hidden absolute right-0 top-0"
           variant="light"
+          onPress={onClose}
         >
           <Icon icon="solar:close-circle-line-duotone" width={24} />
         </Button>

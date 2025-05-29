@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
     // Ensure modelId is within valid range
     const selectedModelIndex = Math.max(
       0,
-      Math.min(modelId, userModel.length - 1)
+      Math.min(modelId, userModel.length - 1),
     );
     const selectedModel = userModel[selectedModelIndex];
 

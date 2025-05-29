@@ -13,7 +13,7 @@ export default function DashboardIcon() {
   const { isOpen } = useSidebarToggle();
 
   return (
-    <div className="absolute top-2  z-10 left-0 flex gap-2 items-center">
+    <div className="absolute top-2 left-2  z-10 left-0 flex gap-2 items-center">
       <SidebarToggle />
       <AIModelSelector />
       <Button

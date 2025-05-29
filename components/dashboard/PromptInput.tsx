@@ -86,11 +86,7 @@ export default function InputPrompt({
   };
 
   return (
-    <div
-      className={`flex w-full  px-3 md:mb-3  flex-col  ${
-        isDashboard ? "" : "absolute bottom-0 max-w-2xl"
-      } gap-4`}
-    >
+    <div className={`flex w-full flex-col gap-4`}>
       <PromptInputFullLineComponent
         handleInputChange={handleInputChange}
         handleSubmit={onSubmit}

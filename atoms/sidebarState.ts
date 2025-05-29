@@ -10,5 +10,5 @@ export function useSidebarToggle() {
     setIsOpen(!isOpen);
   };
 
-  return { isOpen, toggleSidebar };
+  return { isOpen, setIsOpen, toggleSidebar };
 }

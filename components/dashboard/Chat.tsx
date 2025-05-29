@@ -85,7 +85,7 @@ export default function Chat({
   return (
     <section className="flex h-full w-full items-center flex-col gap-4">
       <ScrollShadow
-        className="h-full w-full flex justify-center h-[calc(100vh-140px)] overflow-y-auto pt-20"
+        className="h-full w-full flex justify-center h-[calc(100vh-140px)] overflow-y-auto px-4 md:px-0 pt-20"
         size={10}
         visibility="auto"
       >
@@ -119,7 +119,7 @@ export default function Chat({
         </div>
       </ScrollShadow>
 
-      <div className="w-full px-4 md:px-0 flex justify-center">
+      <div className="absolute bottom-2 w-full px-5 flex justify-center">
         <div className="w-full md:max-w-2xl">
           <PromptInput
             chatId={chatId}
