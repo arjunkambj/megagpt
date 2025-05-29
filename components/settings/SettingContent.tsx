@@ -8,7 +8,7 @@ import ContactUs from "./sub/contact-us";
 
 export default function SettingsContent() {
   return (
-    <Tabs className="w-full">
+    <Tabs className="w-full md:px-5 px-2">
       <Tab key="account" className="w-full" title="Account">
         <div className="py-4 w-full">
           <Account />
