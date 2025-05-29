@@ -119,7 +119,7 @@ export default function Chat({
         </div>
       </ScrollShadow>
 
-      <div className="absolute bottom-2 w-full px-5 flex justify-center">
+      <div className="absolute bottom-2 w-full md:px-5 px-2 flex justify-center">
         <div className="w-full md:max-w-2xl">
           <PromptInput
             chatId={chatId}

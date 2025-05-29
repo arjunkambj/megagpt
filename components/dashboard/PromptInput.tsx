@@ -43,7 +43,7 @@ interface PromptSuggestionsProps {
 const PromptSuggestions = ({ onSelect, className }: PromptSuggestionsProps) => {
   return (
     <div
-      className={`hidden md:flex flex-row flex-wrap items-center justify-center gap-2 ${className}`}
+      className={`flex flex-row flex-wrap items-center justify-center gap-2 ${className}`}
     >
       {suggestions.map((suggestion) => (
         <Button
