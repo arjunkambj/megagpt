@@ -17,12 +17,14 @@ export default function SettingsLayout({
           </div>
         </div>
       </div>
+
+      {/* Mobile */}
       <div className="relative overflow-y-auto bg-default-50 flex flex-col w-full min-h-screen h-full md:hidden">
         <SettingsButton />
-        <div className="flex flex-col justify-center items-center gap-4 px-4 py-4 w-full">
+        <div className="flex flex-col gap-4 px-4 py-4 w-full">
           <UserStat />
-          <div className="flex flex-col justify-center items-center w-full h-full">
-            <div className="flex flex-col w-full h-full">{children}</div>
+          <div className="flex flex-col w-full">
+            <div className="flex flex-col w-full">{children}</div>
           </div>
         </div>
       </div>

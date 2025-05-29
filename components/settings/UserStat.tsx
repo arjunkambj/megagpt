@@ -14,7 +14,7 @@ export default function UserStat() {
   const user = useQuery(api.functions.user.currentUser);
 
   return (
-    <Card className="max-w-xs w-full h-full bg-black text-white bg-default-50  border-none shadow-none">
+    <Card className="md:max-w-xs w-full bg-black text-white bg-default-50 border-none shadow-none">
       <CardHeader className="flex flex-col items-center pb-2">
         <div className="flex flex-col items-center">
           <Avatar
