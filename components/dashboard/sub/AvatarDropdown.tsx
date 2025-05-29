@@ -40,7 +40,7 @@ export default function AvatarDropdown() {
                 <p className="text-small font-semibold leading-5 text-foreground">
                   {user?.name}
                 </p>
-                <p className="text-tiny text-default-400">{user?.email}</p>
+                <p className="text-tiny text-default-400">FREE</p>
               </div>
             </div>
           </Button>
