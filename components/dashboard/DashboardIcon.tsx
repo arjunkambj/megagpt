@@ -19,11 +19,11 @@ export default function DashboardIcon() {
       <Button
         isIconOnly
         as={Link}
-        className={` ${isOpen ? "hidden" : "block"}`}
+        className={` ${isOpen ? "hidden" : "block"} dark:bg-[#141414] rounded-lg `}
         href="/chat"
         variant="flat"
       >
-        <div className="flex items-center w-full h-full justify-center">
+        <div className="flex items-center  bg-[#141414] w-full h-full justify-center">
           <Icon height={22} icon={"hugeicons:plus-sign"} width={22} />
         </div>
       </Button>

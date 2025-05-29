@@ -34,6 +34,7 @@ export default function Chat({
     onSubmit,
     isLoading,
     messagesLoading,
+    chatNotFound,
   } = useChat(isDashboard, initialChatId);
 
   // Handle query parameter similar to ai-chatbot
@@ -55,6 +56,11 @@ export default function Chat({
   // Show loading when messages are being fetched for existing chats
   if (messagesLoading) {
     return <LoadingSpinner message={UI_CONFIG.LOADING_MESSAGES.MESSAGES} />;
+  }
+
+  // Handle chat not found (will redirect automatically)
+  if (chatNotFound) {
+    return <LoadingSpinner message="Chat not found, redirecting..." />;
   }
 
   // Dashboard view (new chat)
@@ -100,9 +106,9 @@ export default function Chat({
               <div className="flex items-center gap-2 p-3 md:p-4">
                 <Spinner
                   className="flex-shrink-0"
-                  color="primary"
+                  color="secondary"
                   size="md"
-                  variant="wave"
+                  variant="dots"
                 />
                 <span className="text-md text-default-500">
                   {UI_CONFIG.LOADING_MESSAGES.AI_THINKING}

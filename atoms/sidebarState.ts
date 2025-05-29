@@ -1,7 +1,7 @@
 import { atom, useAtom } from "jotai";
 
 // Sidebar visibility state atom
-export const sidebarOpenAtom = atom(false);
+export const sidebarOpenAtom = atom(true);
 
 export function useSidebarToggle() {
   const [isOpen, setIsOpen] = useAtom(sidebarOpenAtom);

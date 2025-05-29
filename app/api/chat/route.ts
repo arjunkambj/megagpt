@@ -2,26 +2,17 @@ import { NextRequest } from "next/server";
 import { openai } from "@ai-sdk/openai";
 import { streamText } from "ai";
 import { ConvexHttpClient } from "convex/browser";
+import { google } from "@ai-sdk/google";
 
+import { generateTitleFromUserMessage } from "@/actions/ai-action";
 import { api } from "@/convex/_generated/api";
 import { CHAT_CONFIG, ERROR_MESSAGES } from "@/lib/constants";
 
 const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
-// Generate a title from the first user message
-function generateChatTitle(message: string): string {
-  // Take first MAX_TITLE_LENGTH characters and clean up
-  const title = message
-    .slice(0, CHAT_CONFIG.MAX_TITLE_LENGTH)
-    .replace(/\n/g, " ")
-    .trim();
-
-  return title.length < message.length ? `${title}...` : title;
-}
-
 export async function POST(request: NextRequest) {
   try {
-    const { messages, chatId, userId } = await request.json();
+    const { messages, chatId, userId, modelId = 0 } = await request.json();
 
     if (!chatId) {
       return new Response(ERROR_MESSAGES.CHAT_ID_REQUIRED, { status: 400 });
@@ -32,7 +23,19 @@ export async function POST(request: NextRequest) {
     }
 
     const systemPrompt = CHAT_CONFIG.SYSTEM_PROMPT;
-    const userModel = openai(CHAT_CONFIG.AI_MODEL);
+
+    const userModel = [
+      openai("gpt-4o-mini"),
+      openai("gpt-4.1-mini"),
+      google("gemini-2.0-flash-001"),
+    ];
+
+    // Ensure modelId is within valid range
+    const selectedModelIndex = Math.max(
+      0,
+      Math.min(modelId, userModel.length - 1),
+    );
+    const selectedModel = userModel[selectedModelIndex];
 
     // Save user message to database
     if (messages.length > 0) {
@@ -48,7 +51,7 @@ export async function POST(request: NextRequest) {
     }
 
     const result = streamText({
-      model: userModel,
+      model: selectedModel,
       system: systemPrompt,
       messages: messages,
       onFinish: async (result) => {
@@ -62,7 +65,9 @@ export async function POST(request: NextRequest) {
 
           // Update chat title if this is the first exchange
           if (messages.length === 1 && messages[0].role === "user") {
-            const title = generateChatTitle(messages[0].content);
+            const title = await generateTitleFromUserMessage({
+              message: messages[0],
+            });
 
             await convex.mutation(api.functions.chat.updateChatTitle, {
               chatId,

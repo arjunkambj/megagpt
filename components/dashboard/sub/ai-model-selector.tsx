@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Dropdown,
   DropdownTrigger,
@@ -10,7 +10,10 @@ import {
 } from "@heroui/dropdown";
 import { Button } from "@heroui/button";
 import { Icon } from "@iconify/react";
+import { useAtom } from "jotai";
 
+import { aiModelAtom } from "@/atoms/aimodel";
+import { models, type Model } from "@/config/ai-model";
 // Custom Badge component since Chip may not be available
 function Badge({
   children,
@@ -51,75 +54,25 @@ function Badge({
   );
 }
 
-// Model types and data
-interface Model {
-  id: string;
-  name: string;
-  description: string;
-  capabilities: string[];
-  tokensPerMin: number;
-  isNew?: boolean;
-  isPro?: boolean;
-}
-
-const models: Model[] = [
-  {
-    id: "gpt-4.1",
-    name: "GPT-4.1",
-    description: "OpenAI's advanced reasoning powerhouse",
-    capabilities: [
-      "Complex problem-solving",
-      "Tool usage",
-      "Advanced reasoning",
-    ],
-    tokensPerMin: 15000,
-    isNew: true,
-    isPro: true,
-  },
-  {
-    id: "gemini-2.5-flash",
-    name: "Gemini 2.5 Flash",
-    description: "Google's optimized model for quick responses",
-    capabilities: [
-      "Multimodal processing",
-      "Fast inference",
-      "Factual responses",
-    ],
-    tokensPerMin: 8000,
-  },
-  {
-    id: "claude-3.7-sonnet",
-    name: "Claude 3.7 Sonnet",
-    description: "Anthropic's balanced model for nuanced tasks",
-    capabilities: ["Longer context", "Nuanced reasoning", "Safety focus"],
-    tokensPerMin: 12000,
-    isPro: true,
-  },
-  {
-    id: "gpt-4o",
-    name: "GPT-4o",
-    description: "OpenAI's multimodal model with enhanced speed",
-    capabilities: ["Vision processing", "Fast responses", "Code generation"],
-    tokensPerMin: 10000,
-  },
-  {
-    id: "grok-3",
-    name: "Grok 3",
-    description: "xAI's witty model with real-time knowledge",
-    capabilities: ["Current events", "Playful responses", "Technical analysis"],
-    tokensPerMin: 15000,
-  },
-];
-
 export default function ModelSelector() {
+  const [currentModelId, setCurrentModelId] = useAtom(aiModelAtom);
   const [selectedModel, setSelectedModel] = useState<Model>(models[0]);
 
+  // Update selected model when currentModelId changes
+  useEffect(() => {
+    const model = models.find((m) => m.id === currentModelId);
+
+    if (model) {
+      setSelectedModel(model);
+    }
+  }, [currentModelId]);
+
   return (
-    <div className="sticky z-50 top-0">
-      <Dropdown>
+    <div className="w-full  dark:bg-[#141414] rounded-lg   max-w-sm">
+      <Dropdown className="bg-[#141414]">
         <DropdownTrigger>
           <Button
-            className="w-auto justify-between"
+            className="w-full dark:bg-[#141414] justify-between"
             endContent={<Icon icon="solar:alt-arrow-down-linear" width={16} />}
             variant="flat"
           >
@@ -131,20 +84,38 @@ export default function ModelSelector() {
         </DropdownTrigger>
         <DropdownMenu
           aria-label="Select AI Model"
-          className="min-w-[280px]"
+          className="min-w-[320px] dark:bg-[#141414]"
           variant="flat"
           onAction={(key) => {
-            const model = models.find((m) => m.id === key);
+            const modelId = Number(key);
+            const model = models.find((m) => m.id === modelId);
 
-            if (model) setSelectedModel(model);
+            if (model) {
+              setSelectedModel(model);
+              setCurrentModelId(model.id);
+            }
           }}
         >
-          <DropdownSection showDivider title="AI Models">
+          <DropdownSection
+            showDivider
+            className="dark:bg-[#141414]"
+            title="Available AI Models"
+          >
             {models.map((model) => (
               <DropdownItem
                 key={model.id}
-                className="py-2"
-                description={model.description}
+                className="py-3 dark:hover:bg-[#1f1f1f]"
+                description={
+                  <div className="space-y-2">
+                    <div className="flex flex-wrap gap-1">
+                      {model.capabilities.map((capability, index) => (
+                        <Badge key={index} color="default" size="sm">
+                          {capability}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                }
                 endContent={
                   <div className="flex items-center gap-1">
                     {model.isNew && (
@@ -153,14 +124,14 @@ export default function ModelSelector() {
                       </Badge>
                     )}
                     {model.isPro && (
-                      <Badge color="secondary" size="sm">
+                      <Badge color="danger" size="sm">
                         Pro
                       </Badge>
                     )}
                   </div>
                 }
                 startContent={
-                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/10">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10">
                     <Icon
                       className="text-primary"
                       icon="solar:cpu-bold"
@@ -169,16 +140,7 @@ export default function ModelSelector() {
                   </div>
                 }
               >
-                <div className="flex flex-col">
-                  <span className="text-small font-medium">{model.name}</span>
-                  <div className="mt-1 flex flex-wrap gap-1">
-                    {model.capabilities.map((capability, index) => (
-                      <Badge key={index} color="default" size="sm">
-                        {capability}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
+                <span className="font-medium">{model.name}</span>
               </DropdownItem>
             ))}
           </DropdownSection>

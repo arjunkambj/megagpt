@@ -12,6 +12,7 @@ export default function SidebarToggle() {
     <Button
       isIconOnly
       aria-label="Open sidebar menu"
+      className="dark:bg-[#141414] rounded-lg "
       variant="flat"
       onPress={toggleSidebar}
     >

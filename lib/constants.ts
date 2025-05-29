@@ -2,7 +2,6 @@
 export const CHAT_CONFIG = {
   MAX_TITLE_LENGTH: 50,
   DEFAULT_CHAT_TITLE: "New Chat",
-  AI_MODEL: "gpt-4o-mini",
   SYSTEM_PROMPT:
     "You are a helpful assistant that can answer questions and help with tasks.",
 } as const;

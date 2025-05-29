@@ -1,13 +1,17 @@
 import { useChat as useAIChat } from "@ai-sdk/react";
 import { useQuery, useMutation } from "convex/react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
 import { useMemo, useEffect, useCallback } from "react";
+import { useAtom } from "jotai";
 
+import { aiModelAtom } from "@/atoms/aimodel";
 import { api } from "@/convex/_generated/api";
 
 export function useChat(isDashboard: boolean, initialChatId?: string) {
   const params = useParams();
+  const router = useRouter();
+  const [currentModelId] = useAtom(aiModelAtom);
 
   // Generate stable chatId
   const chatId = useMemo(() => {
@@ -20,6 +24,12 @@ export function useChat(isDashboard: boolean, initialChatId?: string) {
 
   const user = useQuery(api.functions.user.currentUser);
 
+  // Check if chat exists for non-dashboard pages
+  const chatExists = useQuery(
+    api.functions.chat.getChatByChatId,
+    !isDashboard && chatId ? { chatId } : "skip",
+  );
+
   // Only fetch messages for existing chats
   const getMessages = useQuery(
     api.functions.message.getMessages,
@@ -27,6 +37,14 @@ export function useChat(isDashboard: boolean, initialChatId?: string) {
   );
 
   const createChat = useMutation(api.functions.chat.createChat);
+
+  // Redirect to main chat page if chat doesn't exist
+  useEffect(() => {
+    if (!isDashboard && chatId && chatExists === null) {
+      // Chat doesn't exist, redirect to main chat page
+      router.push("/chat");
+    }
+  }, [isDashboard, chatId, chatExists, router]);
 
   const {
     messages,
@@ -41,6 +59,7 @@ export function useChat(isDashboard: boolean, initialChatId?: string) {
     body: {
       chatId,
       userId: user?._id,
+      modelId: currentModelId,
     },
   });
 
@@ -102,5 +121,6 @@ export function useChat(isDashboard: boolean, initialChatId?: string) {
     onSubmit,
     isLoading: !user,
     messagesLoading: !isDashboard && getMessages === undefined && !!chatId,
+    chatNotFound: !isDashboard && chatExists === null && !!chatId,
   };
 }
