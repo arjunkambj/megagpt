@@ -24,6 +24,7 @@ const schema = defineSchema({
     chatId: v.string(),
     title: v.string(),
     isPinned: v.boolean(),
+    updatedAt: v.optional(v.number()),
   })
     .index("byUserId", ["userId"])
     .index("byChatId", ["chatId"]),

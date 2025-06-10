@@ -85,11 +85,11 @@ export default function Chat({
   return (
     <section className="flex h-full w-full items-center flex-col gap-4">
       <ScrollShadow
-        className="h-full w-full flex justify-center h-[calc(100vh-140px)] overflow-y-auto px-4 md:px-0 pt-20"
+        className="h-full w-full flex justify-center h-[calc(100vh-150px)] overflow-y-auto px-4 md:px-4 pt-20"
         size={10}
         visibility="auto"
       >
-        <div className="flex w-full md:max-w-2xl flex-col gap-4 md:gap-10">
+        <div className="flex w-full md:max-w-3xl pb-10 flex-col gap-4 md:gap-10">
           {messages.map((message) => (
             <div key={message.id}>
               {message.role === "user" ? (
@@ -119,8 +119,8 @@ export default function Chat({
         </div>
       </ScrollShadow>
 
-      <div className="absolute bottom-2 w-full md:px-5 px-2 flex justify-center">
-        <div className="w-full md:max-w-2xl">
+      <div className="absolute bottom-6 w-full px-3 flex justify-center">
+        <div className="w-full md:max-w-3xl">
           <PromptInput
             chatId={chatId}
             handleInputChange={handleInputChange}

@@ -2,6 +2,7 @@ import "@/styles/globals.css";
 import { Metadata, Viewport } from "next";
 import clsx from "clsx";
 import { ConvexAuthNextjsServerProvider } from "@convex-dev/auth/nextjs/server";
+import { ConvexQueryCacheProvider } from "convex-helpers/react/cache/provider";
 
 import { Providers } from "./providers";
 
@@ -43,11 +44,13 @@ export default function RootLayout({
           )}
         >
           <ConvexClientProvider>
-            <Providers
-              themeProps={{ attribute: "class", defaultTheme: "dark" }}
-            >
-              <main className="relative w-full h-full">{children}</main>
-            </Providers>
+            <ConvexQueryCacheProvider>
+              <Providers
+                themeProps={{ attribute: "class", defaultTheme: "dark" }}
+              >
+                <main className="relative w-full h-full">{children}</main>
+              </Providers>
+            </ConvexQueryCacheProvider>
           </ConvexClientProvider>
         </body>
       </html>

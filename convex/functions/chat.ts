@@ -25,6 +25,7 @@ export const createChat = mutation({
       title: "New Chat",
       chatId: args.chatId,
       isPinned: false,
+      updatedAt: Date.now(),
     });
 
     return chatId;
@@ -107,5 +108,71 @@ export const deleteChat = mutation({
     }
 
     throw new Error("Chat not found");
+  },
+});
+
+// Deleting Messages and Chat
+export const deleteChatByChatId = mutation({
+  args: {
+    chatId: v.string(),
+  },
+  handler: async (ctx, { chatId }) => {
+    // Delete all messages in the chat using the optimized function
+    await ctx.runMutation(api.functions.message.deleteMessagesByChatId, {
+      chatId,
+    });
+
+    // Delete the chat
+    const chat = await ctx.db
+      .query("chats")
+      .withIndex("byChatId", (q) => q.eq("chatId", chatId))
+      .first();
+
+    if (chat) {
+      await ctx.db.delete(chat._id);
+
+      return { success: true };
+    }
+
+    throw new Error("Chat not found");
+  },
+});
+
+export const updateChatIsPinned = mutation({
+  args: {
+    chatId: v.string(),
+    isPinned: v.boolean(),
+  },
+  handler: async (ctx, { chatId, isPinned }) => {
+    const chat = await ctx.db
+      .query("chats")
+      .withIndex("byChatId", (q) => q.eq("chatId", chatId))
+      .first();
+
+    if (!chat) {
+      throw new Error("Chat not found");
+    }
+
+    await ctx.db.patch(chat._id, { isPinned: isPinned, updatedAt: Date.now() });
+
+    return chat._id;
+  },
+});
+
+export const updateChatUpdatedAt = mutation({
+  args: {
+    chatId: v.string(),
+  },
+  handler: async (ctx, { chatId }) => {
+    const chat = await ctx.db
+      .query("chats")
+      .withIndex("byChatId", (q) => q.eq("chatId", chatId))
+      .first();
+
+    if (!chat) {
+      throw new Error("Chat not found");
+    }
+
+    await ctx.db.patch(chat._id, { updatedAt: Date.now() });
   },
 });
