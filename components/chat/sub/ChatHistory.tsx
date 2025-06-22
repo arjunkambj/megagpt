@@ -14,7 +14,7 @@ export default function ChatHistory() {
   const user = useQuery(api.function.users.currentUser);
   const chats = useQuery(
     api.function.chats.getChatsByUserId,
-    user ? { userId: user._id } : "skip",
+    user ? { userId: user._id } : "skip"
   );
 
   const pathname = usePathname();
@@ -55,7 +55,7 @@ export default function ChatHistory() {
     .sort(
       (a, b) =>
         (b.updatedAt ?? b._creationTime ?? 0) -
-        (a.updatedAt ?? a._creationTime ?? 0),
+        (a.updatedAt ?? a._creationTime ?? 0)
     );
 
   // Helper function to categorize chats by time
@@ -120,10 +120,10 @@ export default function ChatHistory() {
               />
             )}
             <span
-              className={`truncate text-left text-sm group-hover:text-default-700 ${
+              className={`truncate text-left text-sm group-hover:text-default-800 ${
                 isChatActive(chat.chatId)
                   ? "text-default-800"
-                  : "text-default-700"
+                  : "text-default-600"
               }`}
             >
               {chat.title}

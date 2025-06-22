@@ -40,7 +40,7 @@ const components: Partial<Components> = {
 
     return (
       ///Code block
-      <div className="group relative my-3 overflow-hidden rounded-lg border border-neutral-600 bg-neutral-800">
+      <div className="group relative my-3 overflow-hidden rounded-lg border border-neutral-700 bg-neutral-900">
         <div className="absolute right-2 top-2 z-10">
           <CodeClipboard code={codeString} />
         </div>
@@ -141,8 +141,8 @@ const NonMemoizedMarkdown = ({ children }: { children: string }) => {
   return (
     <ReactMarkdown
       components={components}
-      rehypePlugins={[rehypePrism, rehypeKatex]}
       remarkPlugins={[remarkGfm, remarkMath]}
+      rehypePlugins={[rehypePrism, rehypeKatex]}
     >
       {children}
     </ReactMarkdown>
@@ -151,5 +151,5 @@ const NonMemoizedMarkdown = ({ children }: { children: string }) => {
 
 export const Markdown = memo(
   NonMemoizedMarkdown,
-  (prevProps, nextProps) => prevProps.children === nextProps.children,
+  (prevProps, nextProps) => prevProps.children === nextProps.children
 );
