@@ -1,95 +1,148 @@
-import { NextRequest } from "next/server";
-import { openai } from "@ai-sdk/openai";
 import { streamText } from "ai";
 import { ConvexHttpClient } from "convex/browser";
-import { google } from "@ai-sdk/google";
-import { DateTime } from "luxon";
+import { isAuthenticatedNextjs } from "@convex-dev/auth/nextjs/server";
+import { createOpenRouter } from "@openrouter/ai-sdk-provider";
+
+import { getCurrentTime, InteractWithGoogleSearch } from "./tools";
+import { addToMemory } from "./tools";
 
 import { generateTitleFromUserMessage } from "@/actions/ai-action";
 import { api } from "@/convex/_generated/api";
-import { ERROR_MESSAGES } from "@/lib/constants";
 
 const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
-export async function POST(request: NextRequest) {
-  try {
-    const { messages, chatId, userId, modelId = 0 } = await request.json();
+const openrouter = createOpenRouter({
+  apiKey: process.env.OPENROUTER_API_KEY,
+});
 
-    if (!chatId) {
-      return new Response(ERROR_MESSAGES.CHAT_ID_REQUIRED, { status: 400 });
-    }
+export async function POST(req: Request) {
+  const { messages, chatId, userId, modelId, isSearchEnabled } =
+    await req.json();
 
-    if (!userId) {
-      return new Response(ERROR_MESSAGES.USER_ID_REQUIRED, { status: 400 });
-    }
+  const isAuthenticated = await isAuthenticatedNextjs();
 
-    const systemPrompt =
-      "You are a helpful assistant that can answer questions and help with tasks. and current date and time is " +
-      DateTime.now().toFormat("yyyy-MM-dd HH:mm:ss") +
-      " in UTC timezone";
+  if (!chatId && !userId && !isAuthenticated) {
+    return new Response(JSON.stringify({ error: "Please login to continue" }), {
+      status: 400,
+    });
+  }
 
-    const userModel = [
-      openai("gpt-4o-mini"),
-      openai("gpt-4.1-mini"),
-      google("gemini-2.0-flash-001"),
-    ];
+  if (messages.length > 0) {
+    const lastMessage = messages[messages.length - 1];
 
-    // Ensure modelId is within valid range
-    const selectedModelIndex = Math.max(
-      0,
-      Math.min(modelId, userModel.length - 1),
-    );
-    const selectedModel = userModel[selectedModelIndex];
-
-    // Save user message to database
-    if (messages.length > 0) {
-      const lastMessage = messages[messages.length - 1];
-
-      if (lastMessage.role === "user") {
-        await convex.mutation(api.functions.message.createMessage, {
+    if (lastMessage.role === "user") {
+      try {
+        await convex.mutation(api.function.messages.addMessageToChat, {
           chatId,
           content: lastMessage.content,
           role: "user",
         });
+        await convex.mutation(api.function.chats.updateChatUpdatedAt, {
+          chatId,
+        });
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error("Error saving user message:", error);
       }
     }
+  }
 
-    const result = streamText({
-      model: selectedModel,
-      system: systemPrompt,
-      messages: messages,
-      onFinish: async (result) => {
-        try {
-          // Save assistant message to database
-          await convex.mutation(api.functions.message.createMessage, {
-            chatId,
-            content: result.text,
-            role: "assistant",
+  const customizations = await convex.query(
+    api.function.customizations.getCustomization,
+    {
+      userId: userId as any,
+    },
+  );
+
+  const memory = await convex.query(api.function.memory.getMemory, {
+    userId: userId as any,
+  });
+
+  const systemPrompt = `
+  You are a helpful assistant who speaks in a human-like way. Add 1 emoji per message for engagement, no more.
+
+  Only use tools when necessary. If you do, explain results clearly and in plain language.
+
+  USER INFO:
+  - userID: ${userId} (use with memory tools)
+  - Call the user: ${customizations?.whattocalluser || "My Lord"}
+  - What user does: ${customizations?.whatuserdoes || "Not specified"}
+  - Traits: ${customizations?.traitsforllm?.join(", ") || "Not specified"}
+  - Preferences: ${customizations?.preferencesofuser?.join(", ") || "Not specified"}
+  - Extra notes: ${customizations?.anythingelse || "Not specified"}
+
+  EXISTING MEMORY:
+  ${memory || "No existing memories found."}
+
+  MEMORY RULES:
+  - Personalize using existing memory
+  - Only call addToMemory if new info is shared
+  - Don’t duplicate or re-add what's already stored
+   `;
+
+  const userModel = [
+    openrouter("openai/gpt-4o-mini"),
+    openrouter("openai/gpt-4.1-mini"),
+    openrouter("openai/gpt-4.1"),
+    openrouter("google/gemini-2.5-flash-preview-05-20"),
+    openrouter("google/gemini-2.5-pro-preview"),
+    openrouter("x-ai/grok-3-mini-beta"),
+    openrouter("x-ai/grok-3-beta"),
+    openrouter("openai/o3-mini"),
+    openrouter("deepseek/deepseek-chat-v3-0324"),
+    openrouter("deepseek/deepseek-r1-0528"),
+    openrouter("qwen/qwen3-235b-a22b"),
+    openrouter("anthropic/claude-sonnet-4"),
+  ];
+
+  // Ensure modelId is within valid range
+  const selectedModelIndex = Math.max(
+    0,
+    Math.min(modelId, userModel.length - 1),
+  );
+  const selectedModel = userModel[selectedModelIndex];
+
+  const result = streamText({
+    model: isSearchEnabled ? openrouter("perplexity/sonar") : selectedModel,
+    system: systemPrompt,
+    messages,
+    maxSteps: 10,
+
+    tools: {
+      internetSearch: InteractWithGoogleSearch,
+      getCurrentTime: getCurrentTime,
+      addToMemory: addToMemory,
+    },
+    onFinish: async (result) => {
+      try {
+        // Save assistant message to database
+        await convex.mutation(api.function.messages.addMessageToChat, {
+          chatId,
+          content: result.text,
+          role: "assistant",
+          modelUsed: modelId.toString(),
+        });
+
+        // Update chat title if this is the first exchange
+        if (messages.length === 1 && messages[0].role === "user") {
+          const title = await generateTitleFromUserMessage({
+            message: messages[0],
           });
 
-          // Update chat title if this is the first exchange
-          if (messages.length === 1 && messages[0].role === "user") {
-            const title = await generateTitleFromUserMessage({
-              message: messages[0],
-            });
-
-            await convex.mutation(api.functions.chat.updateChatTitle, {
-              chatId,
-              title,
-            });
-          }
-        } catch (error) {
-          // eslint-disable-next-line no-console
-          console.error("Error saving assistant message:", error);
+          await convex.mutation(api.function.chats.updateChatTitle, {
+            chatId,
+            title,
+          });
         }
-      },
-    });
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error("Error saving assistant message:", error);
+      }
+    },
+  });
 
-    return result.toDataStreamResponse();
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error("Error in chat API:", error);
-
-    return new Response(ERROR_MESSAGES.INTERNAL_ERROR, { status: 500 });
-  }
+  return result.toDataStreamResponse({
+    sendReasoning: true,
+    sendSources: true,
+  });
 }
