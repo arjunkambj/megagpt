@@ -43,7 +43,7 @@ export default function MessageUI({
 
     if (lastMessage?.role === "assistant" && lastMessage.toolInvocations) {
       const memoryTool = lastMessage.toolInvocations.find(
-        (tool: any) => tool.toolName === "addToMemory",
+        (tool: any) => tool.toolName === "addToMemory"
       );
       const hasMemory = !!memoryTool;
 

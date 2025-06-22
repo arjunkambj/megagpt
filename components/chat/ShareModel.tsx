@@ -120,7 +120,7 @@ const ShareModel = memo(function ShareModel({ chatId }: { chatId: string }) {
                       value={selectedExpiration}
                       onValueChange={(value) => {
                         setSelectedExpiration(
-                          value as "1d" | "2d" | "7d" | "never",
+                          value as "1d" | "2d" | "7d" | "never"
                         );
                       }}
                     >

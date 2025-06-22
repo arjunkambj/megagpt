@@ -77,7 +77,7 @@ export default function ChatSection({
             " z-15 max-w-3xl px-5 lg:px-0 w-full  flex flex-col gap-5",
             !hasMessages
               ? "flex items-center justify-center h-dvh md:mb-4 mb-10 gap-8"
-              : "absolute bottom-8",
+              : "absolute bottom-8"
           )}
         >
           {!isAtBottom && status !== "streaming" && !isnewchat && (
