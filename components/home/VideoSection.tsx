@@ -1,5 +1,29 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
+
+const VideoBackground = () => {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return null;
+  }
+
+  return (
+    <video
+      autoPlay
+      loop
+      muted
+      playsInline
+      className="absolute inset-0 w-full h-full object-cover"
+    >
+      <source src="/public.mp4" type="video/mp4" />
+    </video>
+  );
+};
 
 const BackgroundSection = () => {
   return (
@@ -8,16 +32,11 @@ const BackgroundSection = () => {
       className="w-full h-screen fixed top-0 left-0 right-0 bottom-0 z-0 overflow-hidden"
     >
       <div className="h-screen w-full relative">
+        {/* Fallback gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-950 to-black" />
+
         {/* Video background */}
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-        >
-          <source src="/public.mp4" type="video/mp4" />
-        </video>
+        <VideoBackground />
 
         {/* Dark overlay to reduce video brightness */}
         <div className="absolute inset-0 bg-black/60" />
